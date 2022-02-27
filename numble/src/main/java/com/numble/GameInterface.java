@@ -18,7 +18,7 @@ public interface GameInterface {
    * (a 1 in position 1 means that the guess in position 1 is present but not in that location)
    * (a 2 in position 1 means that the guess in position 1 is not present at all)
    */
-  ArrayList<Integer> checkGuess(String userGuess);
+  ArrayList<Integer> checkGuess(ArrayList<String> userGuess);
 
   /**
    * method to check if the user has won or not

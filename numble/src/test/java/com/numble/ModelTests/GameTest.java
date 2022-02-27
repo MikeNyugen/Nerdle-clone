@@ -4,6 +4,9 @@ import com.numble.model.Equation;
 import com.numble.model.Game;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -18,30 +21,40 @@ public class GameTest {
 
   @Test
   void checkGuessTest() {
-    Game game = mock(Game.class);
-    when(game.getTarget()).thenReturn("12+6=18");
-    assertEquals("[0,3,0,3,0,0,0]", game.checkGuess("11+5=18").toString());
-    assertEquals(game.checkGuess("[2,2,0,3,0,3]"), game.checkGuess("81+9=90").toString());
+    Game game = new Game();
+    game.target = "12+6=18";
+    assertEquals("12+6=18", game.getTarget());
+    ArrayList<String> userGuess = new ArrayList<String>(
+     Arrays.asList("1", "1", "+", "5", "=", "1", "8")
+    );
+    assertEquals("[0, 2, 0, 2, 0, 0, 0]", game.checkGuess(userGuess).toString());
   }
 
   @Test
   void equationGeneratorTest() {
-    Game game = mock(Game.class);
+    Game game = new Game();
     assertNotNull(game.generateEquation());
   }
 
   @Test
   void hasWonTest() {
-    Game game = mock(Game.class);
-    
-    when(game.getTarget()).thenReturn("11+1=13");
+    Game game = new Game();
+    game.target = "11+1=13";
     assertFalse(game.hasWon());
 
-    game.checkGuess("11+1=14");
+    ArrayList<String> userGuess1 = new ArrayList<String>(
+     Arrays.asList("1", "1", "+", "1", "=", "1", "4")
+    );
+    game.checkGuess(userGuess1);
     assertFalse(game.hasWon());
 
-    game.checkGuess("11+1=13");
+    ArrayList<String> userGuess2 = new ArrayList<String>(
+     Arrays.asList("1", "1", "+", "1", "=", "1", "3")
+    );
+    game.checkGuess(userGuess2);
     assertTrue(game.hasWon());
+
   }
+
 
 }
