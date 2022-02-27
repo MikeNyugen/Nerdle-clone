@@ -1,4 +1,4 @@
-package com.numble.numble;
+package com.numble;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
