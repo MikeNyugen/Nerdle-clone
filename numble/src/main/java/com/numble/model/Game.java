@@ -19,6 +19,10 @@ public class Game implements GameInterface {
     target = generateEquation();
   }
 
+  public Game(String init) {
+    target = init;
+  }
+
   @Override
   public String generateEquation() {
     return equation.getRandomWord();
