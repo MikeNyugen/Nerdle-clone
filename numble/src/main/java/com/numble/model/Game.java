@@ -16,12 +16,12 @@ public class Game implements GameInterface {
   //methods
   public Game() {
     equation = new Equation();
+    target = generateEquation();
   }
 
   @Override
   public String generateEquation() {
-    target = equation.getRandomWord();
-    return getTarget();
+    return equation.getRandomWord();
   }
 
   @Override

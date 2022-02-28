@@ -1,5 +1,6 @@
 package com.numble;
 
+import com.numble.model.Game;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,7 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NumbleApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(NumbleApplication.class, args);
+		Game game = new Game();
 	}
 
 }
