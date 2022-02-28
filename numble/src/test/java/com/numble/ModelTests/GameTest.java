@@ -31,6 +31,17 @@ public class GameTest {
   }
 
   @Test
+  void anotherCheckGuessTest() {
+    Game game = new Game();
+    game.target = "4321+11";
+    assertEquals("4321+11", game.getTarget());
+    ArrayList<String> userGuess = new ArrayList<String>(
+     Arrays.asList("1", "1", "1", "1", "+", "2", "2")
+    );
+    assertEquals("[1, 1, 2, 0, 0, 1, 2]", game.checkGuess(userGuess).toString());
+  }
+
+  @Test
   void equationGeneratorTest() {
     Game game = new Game();
     assertNotNull(game.generateEquation());
