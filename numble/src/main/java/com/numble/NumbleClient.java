@@ -44,7 +44,7 @@ public class NumbleClient {
         if (json.get("status").toString().equals("OK")) {
             return json.get("target").toString();
         } else {
-            throw new RuntimeException(json.get("error").toString());
+            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
         }
     }
 
@@ -59,7 +59,7 @@ public class NumbleClient {
         if (json.get("status").toString().equals("OK")) {
             return json.get("target_result").toString();
         } else {
-            throw new RuntimeException(json.get("error").toString());
+            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
         }
     }
 
@@ -74,7 +74,7 @@ public class NumbleClient {
         if (json.get("status").toString().equals("OK")) {
             return json.get("has_won").toString().equals("true");
         } else {
-            throw new RuntimeException(json.get("error").toString());
+            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
         }
     }
 
@@ -89,7 +89,7 @@ public class NumbleClient {
         if (json.get("status").toString().equals("OK")) {
             return Integer.valueOf(json.get("length").toString());
         } else {
-            throw new RuntimeException(json.get("error").toString());
+            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
         }
     }
 
@@ -109,7 +109,7 @@ public class NumbleClient {
             }
             return result;
         } else {
-            throw new RuntimeException(json.get("error").toString());
+            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
         }
     }
 }
