@@ -27,5 +27,11 @@ public interface GameInterface {
    */
   String getTarget();
 
+  /**
+   * method to get the result (i.e. answer) of the equation
+   * @return string result of equation
+   */
+  String getTargetResult();
+
 
 }
