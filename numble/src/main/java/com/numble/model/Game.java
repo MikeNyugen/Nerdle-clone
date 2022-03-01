@@ -9,8 +9,8 @@ import java.util.Arrays;
 public class Game implements GameInterface {
 
   //attributes
-  public String target = null;
-  ArrayList<Integer> colourCode;
+  private String target = null;
+  private ArrayList<Integer> colourCode;
 
   //methods
   public Game() {
