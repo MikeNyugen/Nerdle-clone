@@ -10,11 +10,15 @@ public class Game implements GameInterface {
 
   //attributes
   private String target = null;
+  private String targetResult = null;
   private ArrayList<Integer> colourCode;
+  private Equation.Pair equationResultPair;
 
   //methods
   public Game() {
-    target = Equation.getRandomWord();
+    equationResultPair = Equation.getEquationResultPair();
+    target = (String) equationResultPair.getEquation();
+    targetResult = (String) equationResultPair.getResult();
   }
 
   public Game(String init) {
@@ -78,5 +82,8 @@ public class Game implements GameInterface {
   public String getTarget() {
     return target;
   }
+
+  @Override
+  public String getTargetResult() { return targetResult; }
 
 }
