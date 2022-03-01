@@ -87,6 +87,7 @@ public class NumbleAPI {
             ObjectMapper mapper = new ObjectMapper();
             var result = mapper.createObjectNode();
             result.put("status", "OK");
+            guess = guess.replaceAll("p", "+");
             System.err.println(guess);
             System.err.println(games.get(id).getTarget());
             System.err.flush();
