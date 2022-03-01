@@ -40,12 +40,6 @@ public class GameTest {
   }
 
   @Test
-  void equationGeneratorTest() {
-    Game game = new Game();
-    assertNotNull(game.generateEquation());
-  }
-
-  @Test
   void hasWonTest() {
     Game game = new Game("11+1=13");
     assertFalse(game.hasWon());

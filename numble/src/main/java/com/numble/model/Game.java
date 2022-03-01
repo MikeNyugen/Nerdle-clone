@@ -14,16 +14,11 @@ public class Game implements GameInterface {
 
   //methods
   public Game() {
-    target = generateEquation();
+    target = Equation.getRandomWord();
   }
 
   public Game(String init) {
     target = init;
-  }
-
-  @Override
-  public String generateEquation() {
-    return Equation.getRandomWord();
   }
 
   @Override

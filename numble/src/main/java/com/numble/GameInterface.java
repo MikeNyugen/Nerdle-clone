@@ -5,12 +5,6 @@ import java.util.ArrayList;
 public interface GameInterface {
 
   /**
-   * method to choose an equation
-   * @return the equation that the user will have to guess
-   */
-  String generateEquation();
-
-  /**
    * method to check the user's guess
    * @param userGuess the user guess
    * @return array list in which each value corresponds to the state of that guess
