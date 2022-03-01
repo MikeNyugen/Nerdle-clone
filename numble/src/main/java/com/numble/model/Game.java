@@ -12,13 +12,13 @@ public class Game implements GameInterface {
   private String target = null;
   private String targetResult = null;
   private ArrayList<Integer> colourCode;
-  private int index;
+  private Equation.Pair equationResultPair;
 
   //methods
   public Game() {
-    index = Equation.getRandomIndex();
-    target = Equation.getEquation(index);
-    targetResult = Equation.getEquationResult(index);
+    equationResultPair = Equation.getEquationResultPair();
+    target = (String) equationResultPair.getEquation();
+    targetResult = (String) equationResultPair.getResult();
   }
 
   public Game(String init) {
