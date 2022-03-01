@@ -2,7 +2,6 @@ package com.numble.model;
 
 import com.numble.GameInterface;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,11 +18,13 @@ public class Game implements GameInterface {
     equationResultPair = Equation.getEquationResultPair();
     target = (String) equationResultPair.getEquation();
     targetResult = (String) equationResultPair.getResult();
+    colourCode = new ArrayList<Integer>();
   }
 
   public Game(String target, String result) {
     this.target = target;
     this.targetResult = result;
+    colourCode = new ArrayList<Integer>();
   }
 
   @Override
@@ -34,7 +35,7 @@ public class Game implements GameInterface {
     ArrayList<String> targetList = new ArrayList<>(Arrays.asList(targetArray));
 
     //The colour code to return
-    colourCode = new ArrayList<Integer>();
+  
     //Initialize colour code so that it is the length of the target, default values being 2
     for (int i = 0; i < targetList.size(); i++) {
       colourCode.add(2);
@@ -71,12 +72,7 @@ public class Game implements GameInterface {
 
   @Override
   public boolean hasWon() {
-    if (colourCode == null) {
-      return false;
-    } else if ((!colourCode.contains(1)) && (!colourCode.contains(2))) {
-      return true;
-    }
-    return false;
+    return colourCode.contains(1) || (colourCode.contains(2));
   }
 
   @Override

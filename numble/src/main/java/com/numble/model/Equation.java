@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class Equation {
 
   static List<String> equations = new ArrayList<>(Arrays.asList("10+10", "63x2", "54x3", "10+1", "1+1"));
@@ -19,12 +18,12 @@ public class Equation {
     return (int) (Math.random() * equations.size());
   }
 
-  //probably redundant now
+  // probably redundant now
   static String getEquation(int index) {
     return equations.get(index);
   }
 
-  //probably redundant now
+  // probably redundant now
   static String getEquationResult(int index) {
     return equationResults.get(index);
   }
@@ -46,7 +45,5 @@ public class Equation {
       return result;
     }
   }
-
-
 
 }
