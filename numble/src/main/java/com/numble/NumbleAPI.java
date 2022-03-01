@@ -27,6 +27,7 @@ public class NumbleAPI {
         result.put("status", "OK");
         result.put("game_id", nextGameID);
         games.put(nextGameID, new Game());
+        result.put("target_result", games.get(nextGameID).getTargetResult());
         nextGameID++;
         return result;
     }
@@ -38,6 +39,19 @@ public class NumbleAPI {
             var result = mapper.createObjectNode();
             result.put("status", "OK");
             result.put("target", games.get(id).getTarget());
+            return result;
+        } else {
+            return makeError(404, "invalid game id");
+        }
+    }
+
+    @GetMapping("/get_target_result/{id}")
+    public ObjectNode getTargetResult(@PathVariable int id) {
+        if (id < nextGameID) {
+            ObjectMapper mapper = new ObjectMapper();
+            var result = mapper.createObjectNode();
+            result.put("status", "OK");
+            result.put("target_result", games.get(id).getTargetResult());
             return result;
         } else {
             return makeError(404, "invalid game id");
