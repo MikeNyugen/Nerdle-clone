@@ -10,12 +10,10 @@ public class Game implements GameInterface {
 
   //attributes
   public String target = null;
-  Equation equation;
   ArrayList<Integer> colourCode;
 
   //methods
   public Game() {
-    equation = new Equation();
     target = generateEquation();
   }
 
@@ -25,7 +23,7 @@ public class Game implements GameInterface {
 
   @Override
   public String generateEquation() {
-    return equation.getRandomWord();
+    return Equation.getRandomWord();
   }
 
   @Override
