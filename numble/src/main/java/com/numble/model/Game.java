@@ -21,8 +21,9 @@ public class Game implements GameInterface {
     targetResult = (String) equationResultPair.getResult();
   }
 
-  public Game(String init) {
-    target = init;
+  public Game(String target, String result) {
+    this.target = target;
+    this.targetResult = result;
   }
 
   @Override
