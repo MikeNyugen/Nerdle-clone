@@ -9,7 +9,7 @@ public class Game implements GameInterface {
   private String target = null;
   private String targetResult = null;
   private ArrayList<String> remainingCharList;
-  private ArrayList<String> colourCode;
+  private ArrayList<Colour> colourCode;
   private Equation.Pair<String, String> equationResultPair;
 
   public Game() {
@@ -26,10 +26,10 @@ public class Game implements GameInterface {
   }
 
   @Override
-  public ArrayList<String> checkGuess(ArrayList<String> userGuessArray) {
+  public ArrayList<Colour> checkGuess(ArrayList<String> userGuessArray) {
     String[] targetArray = target.split("");
     ArrayList<String> targetList = new ArrayList<>(Arrays.asList(targetArray));
-    colourCode = new ArrayList<String>();
+    colourCode = new ArrayList<Colour>();
 
     initilizeColours(targetList);
     setGreenTiles(userGuessArray, targetList);
@@ -40,7 +40,7 @@ public class Game implements GameInterface {
   
   void initilizeColours(ArrayList<String> targetList) {
     for (int i = 0; i < targetList.size(); i++) {
-      colourCode.add("GREY");
+      colourCode.add(Colour.GREY);
     }
   }
 
@@ -49,7 +49,7 @@ public class Game implements GameInterface {
       String number = userGuessArray.get(i);
       String targetNumber = targetList.get(i);
       if (number.equals(targetNumber)) {
-        colourCode.set(i, "GREEN");
+        colourCode.set(i, Colour.GREEN);
         targetList.set(i, "*");
       } else {
         remainingCharList.add(userGuessArray.get(i));
@@ -60,9 +60,9 @@ public class Game implements GameInterface {
   void setOrangeTiles(ArrayList<String> userGuessArray, ArrayList<String> targetList) {
     for (int i = 0; i < userGuessArray.size(); i++) {
       String number = userGuessArray.get(i);
-      boolean correct = colourCode.get(i).equals("GREEN");
+      boolean correct = colourCode.get(i).equals(Colour.GREEN);
       if (!correct && targetList.contains(number)) {
-        colourCode.set(i, "ORANGE");
+        colourCode.set(i, Colour.ORANGE);
         remainingCharList.remove(userGuessArray.get(i));
         targetList.remove(userGuessArray.get(i));
       }
@@ -74,7 +74,7 @@ public class Game implements GameInterface {
     if (colourCode == null) {
       return false;
     } else {
-      return !(colourCode.contains("ORANGE") || (colourCode.contains("GREY")));
+      return !(colourCode.contains(Colour.ORANGE) || (colourCode.contains(Colour.GREY)));
     }
   }
 

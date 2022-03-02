@@ -1,9 +1,11 @@
 package com.numble.ModelTests;
 
+import com.numble.model.Colour;
 import com.numble.model.Equation;
 import com.numble.model.Game;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,8 +20,8 @@ public class GameTest {
     Game game = new Game("12+6", "=18");
     ArrayList<String> userGuess = new ArrayList<String>(
         Arrays.asList("1", "1", "+", "5"));
-    ArrayList<String> expected = new ArrayList<>(Arrays.asList("GREEN", "GREY", "GREEN", "GREY"));
-    ArrayList<String> actual = game.checkGuess(userGuess);
+    ArrayList<Colour> expected = new ArrayList<>(Arrays.asList(Colour.GREEN, Colour.GREY, Colour.GREEN, Colour.GREY));
+    ArrayList<Colour> actual = game.checkGuess(userGuess);
     assertEquals(expected, actual);
   }
 
@@ -29,9 +31,9 @@ public class GameTest {
     assertEquals("4321+11", game.getTarget());
     ArrayList<String> userGuess = new ArrayList<String>(
         Arrays.asList("1", "1", "1", "1", "+", "2", "2"));
-    ArrayList<String> expected = new ArrayList<>(
-        Arrays.asList("ORANGE", "ORANGE", "GREY", "GREEN", "GREEN", "ORANGE", "GREY"));
-    ArrayList<String> actual = game.checkGuess(userGuess);
+    ArrayList<Colour> expected = new ArrayList<Colour>(
+        Arrays.asList(Colour.ORANGE,Colour.ORANGE , Colour.GREY, Colour.GREEN, Colour.GREEN, Colour.ORANGE, Colour.GREY));
+    ArrayList<Colour> actual = game.checkGuess(userGuess);
 
     assertEquals(expected, actual);
   }
@@ -51,5 +53,4 @@ public class GameTest {
     game.checkGuess(userGuess2);
     assertTrue(game.hasWon());
   }
-
 }

@@ -3,29 +3,21 @@ package com.numble.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Equation {
 
   static List<String> equations = new ArrayList<>(Arrays.asList("10+10", "63x2", "54x3", "10+1", "1+1"));
   static List<String> equationResults = new ArrayList<>(Arrays.asList("=20", "=126", "=162", "=11", "=2"));
 
-  public static Pair<String, String> getEquationResultPair() {
+  static Pair<String, String> getEquationResultPair() {
     int index = getRandomIndex();
     return new Pair<String, String>(equations.get(index), equationResults.get(index));
   }
 
   static int getRandomIndex() {
-    return (int) (Math.random() * equations.size());
-  }
-
-  // probably redundant now
-  static String getEquation(int index) {
-    return equations.get(index);
-  }
-
-  // probably redundant now
-  static String getEquationResult(int index) {
-    return equationResults.get(index);
+    Random random = new Random();
+    return random.nextInt(equations.size() - 1);
   }
 
   static class Pair<T1, T2> {
