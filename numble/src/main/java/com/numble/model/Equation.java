@@ -9,7 +9,7 @@ public class Equation {
   static List<String> equations = new ArrayList<>(Arrays.asList("10+10", "63x2", "54x3", "10+1", "1+1"));
   static List<String> equationResults = new ArrayList<>(Arrays.asList("=20", "=126", "=162", "=11", "=2"));
 
-  static Pair<String, String> getEquationResultPair() {
+  public static Pair<String, String> getEquationResultPair() {
     int index = getRandomIndex();
     return new Pair<String, String>(equations.get(index), equationResults.get(index));
   }
