@@ -12,8 +12,8 @@ public class ClientServerInteractionTests {
     static Thread server;
     static NumbleClient client = new NumbleClient();
 
-    @BeforeEach
-    void before() throws InterruptedException {
+    @BeforeAll
+    static void before() throws InterruptedException {
         server = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -72,8 +72,8 @@ public class ClientServerInteractionTests {
         assertTrue(client.hasWon(firstUser));
     }
 
-    @AfterEach
-    void after() {
+    @AfterAll
+    static void after() {
         server.stop();
     }
 }
