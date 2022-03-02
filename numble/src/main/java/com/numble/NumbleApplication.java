@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NumbleApplication {
 
 	public static void main(String[] args) {
-		GameView gameView = new GameView();
+		//GameView gameView = new GameView();
 		SpringApplication.run(NumbleApplication.class, args);
 	}
 }
