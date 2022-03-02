@@ -1,9 +1,11 @@
 package com.numble.ModelTests;
 
+import com.numble.model.Colour;
 import com.numble.model.Equation;
 import com.numble.model.Game;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,19 +16,13 @@ import static org.mockito.Mockito.when;
 public class GameTest {
 
   @Test
-  void gameCreationTest() {
-    Game game = new Game();
-    assertNotNull(game);
-  }
-
-  @Test
   void checkGuessTest() {
     Game game = new Game("12+6", "=18");
-    assertEquals("12+6", game.getTarget());
     ArrayList<String> userGuess = new ArrayList<String>(
-     Arrays.asList("1", "1", "+", "5")
-    );
-    assertEquals("[0, 2, 0, 2]", game.checkGuess(userGuess).toString());
+        Arrays.asList("1", "1", "+", "5"));
+    ArrayList<Colour> expected = new ArrayList<>(Arrays.asList(Colour.GREEN, Colour.GREY, Colour.GREEN, Colour.GREY));
+    ArrayList<Colour> actual = game.checkGuess(userGuess);
+    assertEquals(expected, actual);
   }
 
   @Test
@@ -34,9 +30,12 @@ public class GameTest {
     Game game = new Game("4321+11", "=4332");
     assertEquals("4321+11", game.getTarget());
     ArrayList<String> userGuess = new ArrayList<String>(
-     Arrays.asList("1", "1", "1", "1", "+", "2", "2")
-    );
-    assertEquals("[1, 1, 2, 0, 0, 1, 2]", game.checkGuess(userGuess).toString());
+        Arrays.asList("1", "1", "1", "1", "+", "2", "2"));
+    ArrayList<Colour> expected = new ArrayList<Colour>(
+        Arrays.asList(Colour.ORANGE,Colour.ORANGE , Colour.GREY, Colour.GREEN, Colour.GREEN, Colour.ORANGE, Colour.GREY));
+    ArrayList<Colour> actual = game.checkGuess(userGuess);
+
+    assertEquals(expected, actual);
   }
 
   @Test
@@ -45,18 +44,13 @@ public class GameTest {
     assertFalse(game.hasWon());
 
     ArrayList<String> userGuess1 = new ArrayList<String>(
-     Arrays.asList("1", "1", "+", "2")
-    );
+        Arrays.asList("1", "1", "+", "2"));
     game.checkGuess(userGuess1);
     assertFalse(game.hasWon());
 
     ArrayList<String> userGuess2 = new ArrayList<String>(
-     Arrays.asList("1", "1", "+", "1")
-    );
+        Arrays.asList("1", "1", "+", "1"));
     game.checkGuess(userGuess2);
     assertTrue(game.hasWon());
-
   }
-
-
 }

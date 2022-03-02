@@ -3,7 +3,7 @@ package com.numble.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.Random;
 
 public class Equation {
 
@@ -16,17 +16,8 @@ public class Equation {
   }
 
   static int getRandomIndex() {
-    return (int) (Math.random() * equations.size());
-  }
-
-  //probably redundant now
-  static String getEquation(int index) {
-    return equations.get(index);
-  }
-
-  //probably redundant now
-  static String getEquationResult(int index) {
-    return equationResults.get(index);
+    Random random = new Random();
+    return random.nextInt(equations.size() - 1);
   }
 
   static class Pair<T1, T2> {
@@ -46,7 +37,5 @@ public class Equation {
       return result;
     }
   }
-
-
 
 }

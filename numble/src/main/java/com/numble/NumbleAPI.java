@@ -111,7 +111,7 @@ public class NumbleAPI {
             var colours = games.get(id).checkGuess(new ArrayList<>(Arrays.asList(guess.split(""))));
             var arrayNode = result.putArray("colours");
             for (var colour : colours) {
-                arrayNode.add(colour);
+                arrayNode.add(String.valueOf(colour));
             }
             return result;
         } else {
