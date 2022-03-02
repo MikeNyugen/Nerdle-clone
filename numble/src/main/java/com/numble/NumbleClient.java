@@ -7,6 +7,7 @@ import java.net.http.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.numble.model.Colour;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -93,7 +94,7 @@ public class NumbleClient {
         }
     }
 
-    public List<Integer> checkGuess(Integer game_id, String guess)
+    public List<Colour> checkGuess(Integer game_id, String guess)
             throws URISyntaxException, IOException, InterruptedException, org.json.simple.parser.ParseException {
         var uri = new URI(endpoint + "check_guess/" + game_id.toString()) + "?guess=" + guess.replace('+', 'p');
         HttpRequest request = HttpRequest.newBuilder(URI.create(uri)).POST(HttpRequest.BodyPublishers.noBody()).build();
@@ -103,9 +104,9 @@ public class NumbleClient {
         JSONObject json = (JSONObject) parser.parse(response.body());
         if (json.get("status").toString().equals("OK")) {
             JSONArray colours = (JSONArray) json.get("colours");
-            var result = new ArrayList<Integer>();
+            var result = new ArrayList<Colour>();
             for (Object colour : colours) {
-                result.add(Integer.valueOf(colour.toString()));
+                result.add(Colour.valueOf(colour.toString()));
             }
             return result;
         } else {

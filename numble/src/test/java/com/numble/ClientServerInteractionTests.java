@@ -1,5 +1,6 @@
 package com.numble;
 
+import com.numble.model.Colour;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.*;
 
@@ -34,7 +35,7 @@ public class ClientServerInteractionTests {
         var colours = client.checkGuess(0, target);
         assertEquals(colours.size(), target.length());
         for (var colour : colours) {
-            assertEquals(colour, 0);
+            assertEquals(colour, Colour.GREEN);
         }
         assertTrue(client.hasWon(0));
         assertThrows(RuntimeException.class, () -> client.hasWon(1));
