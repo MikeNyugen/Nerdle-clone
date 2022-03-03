@@ -83,11 +83,7 @@ public class Game implements GameInterface {
 
   @Override
   public boolean hasLost() {
-    if ((guessesRemaining == 0) && (!hasWon())) {
-      return true;
-    } else {
-      return false;
-    }
+    return (guessesRemaining == 0) && (!hasWon());
   }
 
   @Override
