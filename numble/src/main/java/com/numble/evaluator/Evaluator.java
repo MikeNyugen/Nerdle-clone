@@ -118,37 +118,4 @@ public class Evaluator {
             return new Number(combine(evaluate(tokens.subList(0, last_token_index - 1)), operation, last_number));
         }
     }
-/*
-    static public Integer badEvaluate(String equation) {
-        if (equation.length() == 0) {
-            return 0;
-        } else if (isNumber(equation.charAt(0))) {
-            // equation starts with a number
-            int first_number = 0;
-            int i = 0;
-            while (i < equation.length() && isNumber(equation.charAt(i))) {
-                first_number *= 10;
-                first_number += (equation.charAt(i) - '0');
-                i++;
-            }
-            if (i == equation.length()) {
-                return first_number;
-            } else {
-                return combine(first_number, equation.charAt(i), badEvaluate(equation.substring(i + 1)));
-            }
-        } else {
-            if (equation.charAt(0) != '(') {
-                throw new RuntimeException("unreachable code reached, probably bad equation used");
-            }
-            int i = 0;
-            while (i < equation.length() && equation.charAt(i) != ')') {
-                i++;
-            }
-            if (i == equation.length()) {
-                throw new RuntimeException("unreachable code reached, probably bad equation used");
-            }
-            return combine(badEvaluate(equation.substring(1, i)), equation.charAt(i + 1), badEvaluate(equation.substring(i + 2)));
-        }
-    }
- */
 }
