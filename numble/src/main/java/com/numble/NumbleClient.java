@@ -11,6 +11,7 @@ import com.numble.model.Colour;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 public class NumbleClient {
@@ -109,6 +110,20 @@ public class NumbleClient {
                 result.add(Colour.valueOf(colour.toString()));
             }
             return result;
+        } else {
+            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
+        }
+    }
+
+    public boolean hasLost(Integer game_id) throws URISyntaxException, IOException, InterruptedException, ParseException {
+        HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "has_lost/" + game_id.toString())).
+                GET().build();
+        var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
+        System.err.println(response.body());
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(response.body());
+        if (json.get("status").toString().equals("OK")) {
+            return json.get("has_lost").toString().equals("true");
         } else {
             throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
         }
