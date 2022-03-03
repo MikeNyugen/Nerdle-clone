@@ -118,4 +118,18 @@ public class NumbleAPI {
             return makeError(404, "invalid game id");
         }
     }
+
+    @GetMapping("has_lost/{id}")
+    public ObjectNode hasLost(@PathVariable int id) {
+        if (id < nextGameID) {
+            ObjectMapper mapper = new ObjectMapper();
+            var result = mapper.createObjectNode();
+            result.put("status", "OK");
+            result.put("has_lost", games.get(id).hasLost());
+            return result;
+        } else {
+            return makeError(404, "invalid game id");
+        }
+    }
+
 }

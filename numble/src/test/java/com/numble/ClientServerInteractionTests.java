@@ -71,6 +71,9 @@ public class ClientServerInteractionTests {
         assertTrue(client.hasWon(thirdUser));
         assertTrue(client.hasWon(secondUser));
         assertTrue(client.hasWon(firstUser));
+        assertFalse(client.hasLost(firstUser));
+        assertFalse(client.hasLost(secondUser));
+        assertFalse(client.hasLost(thirdUser));
     }
 
     @AfterAll
