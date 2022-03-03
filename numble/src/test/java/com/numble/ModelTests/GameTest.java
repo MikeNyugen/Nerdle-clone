@@ -53,4 +53,22 @@ public class GameTest {
     game.checkGuess(userGuess2);
     assertTrue(game.hasWon());
   }
+
+  @Test
+  void hasLostTest() {
+    Game game = new Game("11+1", "=13");
+    assertFalse(game.hasLost());
+    ArrayList<String> userGuess1 = new ArrayList<String>(
+     Arrays.asList("1", "1", "+", "2"));
+    game.checkGuess(userGuess1); //guess no.1 is wrong
+    assertFalse(game.hasLost());
+    game.checkGuess(userGuess1); //guess no.2 is wrong
+    assertFalse(game.hasLost());
+    game.checkGuess(userGuess1); //guess no.3 is wrong
+    assertFalse(game.hasLost());
+    game.checkGuess(userGuess1); //guess no.4 is wrong
+    assertFalse(game.hasLost());
+    game.checkGuess(userGuess1); //guess no.5 is wrong and ran out of guesses
+    assertTrue(game.hasLost());
+  }
 }

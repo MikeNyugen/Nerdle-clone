@@ -11,6 +11,7 @@ public class Game implements GameInterface {
   private ArrayList<String> remainingCharList;
   private ArrayList<Colour> colourCode;
   private Equation.Pair<String, String> equationResultPair;
+  private int guessesRemaining = 5;
 
   public Game() {
     equationResultPair = Equation.getEquationResultPair();
@@ -34,6 +35,8 @@ public class Game implements GameInterface {
     initilizeColours(targetList);
     setGreenTiles(userGuessArray, targetList);
     setOrangeTiles(userGuessArray, targetList);
+
+    guessesRemaining--;
 
     return colourCode;
   }
@@ -75,6 +78,15 @@ public class Game implements GameInterface {
       return false;
     } else {
       return !(colourCode.contains(Colour.ORANGE) || (colourCode.contains(Colour.GREY)));
+    }
+  }
+
+  @Override
+  public boolean hasLost() {
+    if ((guessesRemaining == 0) && (!hasWon())) {
+      return true;
+    } else {
+      return false;
     }
   }
 
