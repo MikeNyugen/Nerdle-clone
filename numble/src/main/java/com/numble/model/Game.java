@@ -23,6 +23,7 @@ public class Game implements GameInterface {
     this.target = target;
     this.targetResult = result;
     remainingCharList = new ArrayList<>();
+    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPairFromDoc();
   }
 
   @Override

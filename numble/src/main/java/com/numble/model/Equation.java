@@ -51,6 +51,7 @@ public class Equation {
     String fullEquation = getRandomEquationFromArray(readEquationsDoc());
     String target = fullEquation.substring(0, fullEquation.indexOf('='));
     String result = fullEquation.substring(fullEquation.indexOf('='));
+    System.out.println(target + "   " + result);
     return new Pair<String, String>(target, result);
   }
 
@@ -58,19 +59,19 @@ public class Equation {
   static String[] readEquationsDoc() {
     //NEED TO MAKE RELATIVE PATH
     File file = new File("../../project-code/Equations.txt");
-    String allEquations = "";
+    StringBuilder str = new StringBuilder();
 
     try (FileReader fr = new FileReader(file))
     {
       int content;
       while ((content = fr.read()) != -1) {
         char currentChar = (char) content;
-        allEquations = allEquations + currentChar;
+        str.append(currentChar);
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
-    String[] equations = allEquations.split("\\R");
+    String[] equations = str.toString().split("\\R");
     return equations;
   }
 
