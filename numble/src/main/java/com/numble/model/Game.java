@@ -31,7 +31,7 @@ public class Game implements GameInterface {
     ArrayList<String> targetList = new ArrayList<>(Arrays.asList(targetArray));
     colourCode = new ArrayList<Colour>();
 
-    initilizeColours(targetList);
+    initializeColours(targetList);
     setGreenTiles(userGuessArray, targetList);
     setOrangeTiles(userGuessArray, targetList);
 
@@ -40,7 +40,7 @@ public class Game implements GameInterface {
     return colourCode;
   }
   
-  void initilizeColours(ArrayList<String> targetList) {
+  void initializeColours(ArrayList<String> targetList) {
     for (int i = 0; i < targetList.size(); i++) {
       colourCode.add(Colour.GREY);
     }
