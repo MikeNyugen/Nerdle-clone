@@ -110,7 +110,7 @@ public class NumbleAPI {
         }
     }
 
-    @GetMapping("has_lost/{id}")
+    @GetMapping("/has_lost/{id}")
     public ObjectNode hasLost(@PathVariable int id) {
         if (id < nextGameID) {
             ObjectMapper mapper = new ObjectMapper();
