@@ -1,6 +1,7 @@
 package com.numble.model;
 
 import com.numble.GameInterface;
+import com.fathzer.soft.javaluator.DoubleEvaluator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +24,6 @@ public class Game implements GameInterface {
     this.target = target;
     this.targetResult = result;
     remainingCharList = new ArrayList<>();
-    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPairFromDoc();
   }
 
   @Override
@@ -98,5 +98,11 @@ public class Game implements GameInterface {
   @Override
   public String getTargetResult() {
     return targetResult;
+  }
+
+  public boolean doesItResultInCorrectSolution(String guess) {
+    DoubleEvaluator evaluator = new DoubleEvaluator();
+    Double guessResult = evaluator.evaluate(guess);
+    return (Double.parseDouble(targetResult) == guessResult);
   }
 }
