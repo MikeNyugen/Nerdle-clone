@@ -13,9 +13,9 @@ public class Game implements GameInterface {
   private int guessesRemaining = 5;
 
   public Game() {
-    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPairFromDoc();
-    target = equationResultPair.getEquation();
-    targetResult = equationResultPair.getResult();
+    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPair();
+    target = (String) equationResultPair.getEquation();
+    targetResult = (String) equationResultPair.getResult();
     remainingCharList = new ArrayList<>();
   }
 
@@ -31,7 +31,7 @@ public class Game implements GameInterface {
     ArrayList<String> targetList = new ArrayList<>(Arrays.asList(targetArray));
     colourCode = new ArrayList<Colour>();
 
-    initilizeColours(targetList);
+    initializeColours(targetList);
     setGreenTiles(userGuessArray, targetList);
     setOrangeTiles(userGuessArray, targetList);
 
@@ -40,7 +40,7 @@ public class Game implements GameInterface {
     return colourCode;
   }
   
-  void initilizeColours(ArrayList<String> targetList) {
+  void initializeColours(ArrayList<String> targetList) {
     for (int i = 0; i < targetList.size(); i++) {
       colourCode.add(Colour.GREY);
     }
@@ -82,11 +82,7 @@ public class Game implements GameInterface {
 
   @Override
   public boolean hasLost() {
-    if ((guessesRemaining == 0) && (!hasWon())) {
-      return true;
-    } else {
-      return false;
-    }
+    return (guessesRemaining == 0) && (!hasWon());
   }
 
   @Override
