@@ -1,8 +1,6 @@
 build-and-test:
+  image: openjdk:11
   stage: build
   script:
-    - apt update
-    - apt install default-jdk -y
     - cd numble
     - ./gradlew test
-
