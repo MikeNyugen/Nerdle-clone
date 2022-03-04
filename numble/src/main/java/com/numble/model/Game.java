@@ -101,4 +101,9 @@ public class Game implements GameInterface {
     Double guessResult = evaluator.evaluate(guess);
     return (Double.parseDouble(targetResult) == guessResult);
   }
+
+  //For hard mode, user will guess = sign as well
+  public void addEqualsOntoTarget() {
+    target = target + "=";
+  }
 }
