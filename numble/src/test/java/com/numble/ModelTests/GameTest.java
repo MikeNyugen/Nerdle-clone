@@ -71,4 +71,9 @@ public class GameTest {
     game.checkGuess(userGuess1); //guess no.5 is wrong and ran out of guesses
     assertTrue(game.hasLost());
   }
+
+  @Test
+  void equationTest() {
+    assertDoesNotThrow(() -> new Game());
+  }
 }

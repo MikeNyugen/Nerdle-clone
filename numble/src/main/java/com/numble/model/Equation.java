@@ -57,7 +57,7 @@ public class Equation {
   //method to get an equation from word file
   static String[] readEquationsDoc() {
     //NEED TO MAKE RELATIVE PATH
-    File file = new File("/Users/michaelclark/OneDrive - University of St Andrews/St Andrews - CS MSc/CS5031 Software Engineering Practice/Assignments/P2/project-code/Equations.txt");
+    File file = new File("../../project-code/Equations.txt");
     String allEquations = "";
 
     try (FileReader fr = new FileReader(file))
