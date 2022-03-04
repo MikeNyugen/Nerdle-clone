@@ -14,9 +14,9 @@ public class Game implements GameInterface {
   private int guessesRemaining = 5;
 
   public Game() {
-    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPairFromDoc();
-    target = equationResultPair.getEquation();
-    targetResult = equationResultPair.getResult();
+    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPair();
+    target = (String) equationResultPair.getEquation();
+    targetResult = (String) equationResultPair.getResult();
     remainingCharList = new ArrayList<>();
   }
 
@@ -83,11 +83,7 @@ public class Game implements GameInterface {
 
   @Override
   public boolean hasLost() {
-    if ((guessesRemaining == 0) && (!hasWon())) {
-      return true;
-    } else {
-      return false;
-    }
+    return (guessesRemaining == 0) && (!hasWon());
   }
 
   @Override

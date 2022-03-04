@@ -1,0 +1,8 @@
+build-and-test:
+  image: openjdk:11
+  stage: build
+  script:
+    - cd numble
+    - ./gradlew test --tests "com.numble.ModelTests.GameTest"
+    - ./gradlew test --tests "com.numble.APITests"
+    - ./gradlew test --tests "com.numble.EvaluatorTests.EvaluatorTest"

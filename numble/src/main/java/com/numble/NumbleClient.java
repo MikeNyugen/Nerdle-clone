@@ -11,6 +11,7 @@ import com.numble.model.Colour;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 public class NumbleClient {
@@ -23,6 +24,10 @@ public class NumbleClient {
 
     NumbleClient() {
         this("http://localhost:8080/");
+    }
+
+    private RuntimeException makeException(JSONObject json) {
+        return new RuntimeException(json.get("message").toString());
     }
 
     public Integer createNewGame() throws URISyntaxException, IOException, InterruptedException, org.json.simple.parser.ParseException {
@@ -42,10 +47,10 @@ public class NumbleClient {
         System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
-        if (json.get("status").toString().equals("OK")) {
+        if (response.statusCode() == 200) {
             return json.get("target").toString();
         } else {
-            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
+            throw makeException(json);
         }
     }
 
@@ -57,10 +62,10 @@ public class NumbleClient {
         System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
-        if (json.get("status").toString().equals("OK")) {
+        if (response.statusCode() == 200) {
             return json.get("target_result").toString();
         } else {
-            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
+            throw makeException(json);
         }
     }
 
@@ -72,10 +77,10 @@ public class NumbleClient {
         System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
-        if (json.get("status").toString().equals("OK")) {
+        if (response.statusCode() == 200) {
             return json.get("has_won").toString().equals("true");
         } else {
-            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
+            throw makeException(json);
         }
     }
 
@@ -87,10 +92,10 @@ public class NumbleClient {
         System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
-        if (json.get("status").toString().equals("OK")) {
+        if (response.statusCode() == 200) {
             return Integer.valueOf(json.get("length").toString());
         } else {
-            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
+            throw makeException(json);
         }
     }
 
@@ -102,7 +107,7 @@ public class NumbleClient {
         System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
-        if (json.get("status").toString().equals("OK")) {
+        if (response.statusCode() == 200) {
             JSONArray colours = (JSONArray) json.get("colours");
             var result = new ArrayList<Colour>();
             for (Object colour : colours) {
@@ -110,7 +115,21 @@ public class NumbleClient {
             }
             return result;
         } else {
-            throw new RuntimeException(((JSONObject)json.get("error")).get("description").toString());
+            throw makeException(json);
+        }
+    }
+
+    public boolean hasLost(Integer game_id) throws URISyntaxException, IOException, InterruptedException, ParseException {
+        HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "has_lost/" + game_id.toString())).
+                GET().build();
+        var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
+        System.err.println(response.body());
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(response.body());
+        if (response.statusCode() == 200) {
+            return json.get("has_lost").toString().equals("true");
+        } else {
+            throw makeException(json);
         }
     }
 }

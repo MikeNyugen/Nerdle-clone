@@ -3,7 +3,9 @@ package com.numble;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.numble.model.Game;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +43,7 @@ public class NumbleAPI {
             result.put("target", games.get(id).getTarget());
             return result;
         } else {
-            return makeError(404, "invalid game id");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "invalid game id");
         }
     }
 
@@ -54,19 +56,8 @@ public class NumbleAPI {
             result.put("target_result", games.get(id).getTargetResult());
             return result;
         } else {
-            return makeError(404, "invalid game id");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "invalid game id");
         }
-    }
-
-    private ObjectNode makeError(int code, String message) {
-        ObjectMapper mapper = new ObjectMapper();
-        var result = mapper.createObjectNode();
-        result.put("status", "error");
-        var error = mapper.createObjectNode();
-        error.put("code", code);
-        error.put("description", message);
-        result.set("error", error);
-        return result;
     }
 
     @GetMapping("/has_won/{id}")
@@ -78,7 +69,7 @@ public class NumbleAPI {
             result.put("has_won", games.get(id).hasWon());
             return result;
         } else {
-            return makeError(404, "invalid game id");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "invalid game id");
         }
     }
 
@@ -91,7 +82,7 @@ public class NumbleAPI {
             result.put("length", games.get(id).getTarget().length());
             return result;
         } else {
-            return makeError(404, "invalid game id");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "invalid game id");
         }
     }
 
@@ -106,7 +97,7 @@ public class NumbleAPI {
             System.err.println(games.get(id).getTarget());
             System.err.flush();
             if (guess.length() != games.get(id).getTarget().length()) {
-                return makeError(400, "guess has wrong length");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "guess has wrong length");
             }
             var colours = games.get(id).checkGuess(new ArrayList<>(Arrays.asList(guess.split(""))));
             var arrayNode = result.putArray("colours");
@@ -115,7 +106,21 @@ public class NumbleAPI {
             }
             return result;
         } else {
-            return makeError(404, "invalid game id");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "invalid game id");
         }
     }
+
+    @GetMapping("/has_lost/{id}")
+    public ObjectNode hasLost(@PathVariable int id) {
+        if (id < nextGameID) {
+            ObjectMapper mapper = new ObjectMapper();
+            var result = mapper.createObjectNode();
+            result.put("status", "OK");
+            result.put("has_lost", games.get(id).hasLost());
+            return result;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "invalid game id");
+        }
+    }
+
 }
