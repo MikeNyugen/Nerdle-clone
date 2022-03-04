@@ -14,7 +14,7 @@ public class Game implements GameInterface {
   private int guessesRemaining = 5;
 
   public Game() {
-    equationResultPair = Equation.getEquationResultPair();
+    equationResultPair = Equation.getEquationResultPairFromDoc();
     target = (String) equationResultPair.getEquation();
     targetResult = (String) equationResultPair.getResult();
     remainingCharList = new ArrayList<>();
