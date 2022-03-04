@@ -38,6 +38,7 @@ public class ClientServerInteractionTests {
             assertEquals(colour, Colour.GREEN);
         }
         assertTrue(client.hasWon(0));
+        assertDoesNotThrow(() -> client.getTargetResult(0));
         assertThrows(RuntimeException.class, () -> client.hasWon(1));
         assertThrows(RuntimeException.class, () -> client.checkGuess(1, ""));
         assertThrows(RuntimeException.class, () -> client.getTarget(1));
