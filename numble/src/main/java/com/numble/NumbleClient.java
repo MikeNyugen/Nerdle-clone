@@ -23,7 +23,7 @@ public class NumbleClient {
     }
 
     NumbleClient() {
-        this("http://localhost:8080/");
+        this("http://localhost:8090/");
     }
 
     private RuntimeException makeException(JSONObject json) {
