@@ -64,7 +64,6 @@ public class Equation {
     {
       int content;
       while ((content = fr.read()) != -1) {
-        System.out.print((char) content);
         char currentChar = (char) content;
         allEquations = allEquations + currentChar;
       }

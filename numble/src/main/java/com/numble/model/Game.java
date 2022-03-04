@@ -10,13 +10,12 @@ public class Game implements GameInterface {
   private String targetResult = null;
   private ArrayList<String> remainingCharList;
   private ArrayList<Colour> colourCode;
-  private Equation.Pair<String, String> equationResultPair;
   private int guessesRemaining = 5;
 
   public Game() {
-    equationResultPair = Equation.getEquationResultPairFromDoc();
-    target = (String) equationResultPair.getEquation();
-    targetResult = (String) equationResultPair.getResult();
+    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPairFromDoc();
+    target = equationResultPair.getEquation();
+    targetResult = equationResultPair.getResult();
     remainingCharList = new ArrayList<>();
   }
 
