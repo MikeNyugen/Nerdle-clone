@@ -3,4 +3,6 @@ build-and-test:
   stage: build
   script:
     - cd numble
-    - ./gradlew test
+    - ./gradlew test --tests "com.numble.ModelTests.GameTest"
+    - ./gradlew test --tests "com.numble.APITests"
+    - ./gradlew test --tests "com.numble.EvaluatorTests.EvaluatorTest"
