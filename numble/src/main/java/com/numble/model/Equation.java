@@ -50,7 +50,7 @@ public class Equation {
   static Pair<String, String> getEquationResultPairFromDoc() {
     String fullEquation = getRandomEquationFromArray(readEquationsDoc());
     String target = fullEquation.substring(0, fullEquation.indexOf('='));
-    String result = fullEquation.substring(fullEquation.indexOf('='));
+    String result = fullEquation.substring(fullEquation.indexOf('=') + 1);
     System.out.println(target + "   " + result);
     return new Pair<String, String>(target, result);
   }
