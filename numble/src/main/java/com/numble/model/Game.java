@@ -2,6 +2,7 @@ package com.numble.model;
 
 import com.numble.GameInterface;
 import com.fathzer.soft.javaluator.DoubleEvaluator;
+import com.numble.evaluator.Evaluator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,9 +98,8 @@ public class Game implements GameInterface {
   }
 
   public boolean doesItResultInCorrectSolution(String guess) {
-    DoubleEvaluator evaluator = new DoubleEvaluator();
-    Double guessResult = evaluator.evaluate(guess);
-    return (Double.parseDouble(targetResult) == guessResult);
+    var guessResult = Evaluator.evaluate(guess);
+    return Integer.valueOf(targetResult).equals(guessResult);
   }
 
   //For hard mode, user will guess = sign as well
