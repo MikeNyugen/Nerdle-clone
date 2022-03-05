@@ -13,6 +13,7 @@ public class Game implements GameInterface {
   private ArrayList<String> remainingCharList;
   private ArrayList<Colour> colourCode;
   private int guessesRemaining = 5;
+  private Mode gameMode;
 
   public Game() {
     Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPair();
@@ -97,8 +98,12 @@ public class Game implements GameInterface {
     return targetResult;
   }
 
-  public boolean doesItResultInCorrectSolution(String guess) {
-    var guessResult = Evaluator.evaluate(guess);
+  public boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray) {
+    StringBuilder guess = new StringBuilder();
+    for (int i = 0; i < userGuessArray.size(); i++) {
+      guess.append(userGuessArray.get(i));
+    }
+    var guessResult = Evaluator.evaluate(String.valueOf(guess));
     return Integer.valueOf(targetResult).equals(guessResult);
   }
 
@@ -106,4 +111,21 @@ public class Game implements GameInterface {
   public void addEqualsOntoTarget() {
     target = target + "=";
   }
+
+  public void setGameMode(String gameModeIn) {
+    switch (gameModeIn) {
+      case "EASY": gameMode = Mode.EASY;
+      break;
+      case "MEDIUM": gameMode = Mode.MEDIUM;
+      addEqualsOntoTarget();
+      break;
+      case "HARD": gameMode = Mode.HARD;
+      break;
+      case "SUPERHARD": gameMode = Mode.SUPERHARD;
+      addEqualsOntoTarget();
+      break;
+      default: gameMode = Mode.EASY;
+    }
+  }
+
 }
