@@ -1,6 +1,8 @@
 package com.numble.model;
 
 import com.numble.GameInterface;
+import com.fathzer.soft.javaluator.DoubleEvaluator;
+import com.numble.evaluator.Evaluator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,5 +95,15 @@ public class Game implements GameInterface {
   @Override
   public String getTargetResult() {
     return targetResult;
+  }
+
+  public boolean doesItResultInCorrectSolution(String guess) {
+    var guessResult = Evaluator.evaluate(guess);
+    return Integer.valueOf(targetResult).equals(guessResult);
+  }
+
+  //For hard mode, user will guess = sign as well
+  public void addEqualsOntoTarget() {
+    target = target + "=";
   }
 }

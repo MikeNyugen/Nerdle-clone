@@ -3,9 +3,13 @@ package com.numble.ModelTests;
 import com.numble.model.Colour;
 import com.numble.model.Equation;
 import com.numble.model.Game;
+import com.fathzer.soft.javaluator.DoubleEvaluator;
+import org.apache.el.lang.ExpressionBuilder;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
+import java.beans.Expression;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -71,4 +75,17 @@ public class GameTest {
     game.checkGuess(userGuess1); //guess no.5 is wrong and ran out of guesses
     assertTrue(game.hasLost());
   }
+
+  @Test
+  void equationTest() {
+    assertDoesNotThrow(() -> new Game());
+  }
+
+  @Test
+  void doesItResultInCorrectSolutionTest() {
+    Game game = new Game("11+1", "13");
+    assertFalse(game.doesItResultInCorrectSolution("10+2"));
+    assertTrue(game.doesItResultInCorrectSolution("10+3"));
+  }
+
 }
