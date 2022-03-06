@@ -26,14 +26,12 @@ public class Menu {
       e.printStackTrace();
     }
     setupFrame();
-
     displayTitle();
     easyButton();
     hardButton();
     option1();
     option2();
     option3();
-
     menuFrame.paintAll(menuFrame.getGraphics());
   }
 
@@ -93,7 +91,6 @@ public class Menu {
     // Switch JPanel when button is clicked
     button.addActionListener(e -> {
       menuFrame.setVisible(false);
-      // Server initialisation should occur here
       NumbleClient client = new NumbleClient();
       int gameID = 0;
       try {
@@ -108,6 +105,7 @@ public class Menu {
         ex.printStackTrace();
       }
       try {
+        assert gameView != null;
         GameController controller = new GameController(gameView, gameID, client);
       } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
         ex.printStackTrace();

@@ -38,7 +38,6 @@ public class GameView extends JPanel {
 
   ArrayList<JButton> calculator = new ArrayList<>();
   JLayeredPane layeredPane;
-
   GridController gameGrid;
 
   public GameView(int gameID, NumbleClient client) throws URISyntaxException, IOException, ParseException, InterruptedException {
