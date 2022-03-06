@@ -129,17 +129,22 @@ public class Game implements GameInterface {
 
   private void setGameMode(String gameModeIn) {
     switch (gameModeIn) {
-      case "EASY": gameMode = Mode.EASY;
-      break;
-      case "MEDIUM": gameMode = Mode.MEDIUM;
-      addEqualsOntoTarget();
-      break;
-      case "HARD": gameMode = Mode.HARD;
-      break;
-      case "SUPERHARD": gameMode = Mode.SUPERHARD;
-      addEqualsOntoTarget();
-      break;
-      default: gameMode = Mode.EASY;
+      case "EASY":
+        gameMode = Mode.EASY;
+        break;
+      case "MEDIUM":
+        gameMode = Mode.MEDIUM;
+        addEqualsOntoTarget();
+        break;
+      case "HARD":
+        gameMode = Mode.HARD;
+        break;
+      case "SUPERHARD":
+        gameMode = Mode.SUPERHARD;
+        addEqualsOntoTarget();
+        break;
+      default:
+        gameMode = Mode.EASY;
     }
   }
 
