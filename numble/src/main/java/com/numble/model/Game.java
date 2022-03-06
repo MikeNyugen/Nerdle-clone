@@ -15,16 +15,16 @@ public class Game implements GameInterface {
   private int guessesRemaining = 5;
   private Mode gameMode;
 
+  /**
+   * Constructor to create a game which selects an equation from file
+   * @param mode the game mode
+   */
   public Game(String mode) {
     Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPairFromDoc();
     target = equationResultPair.getEquation();
     targetResult = equationResultPair.getResult();
     remainingCharList = new ArrayList<>();
     setGameMode(mode);
-  }
-
-  public Game() {
-    this("EASY");
   }
 
   public Game(String target, String result, String mode) {

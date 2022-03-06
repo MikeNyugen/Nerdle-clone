@@ -1,13 +1,8 @@
 package com.numble.model;
 
-import javax.sound.midi.SysexMessage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 //does the need to be public *static* class?
@@ -44,12 +39,11 @@ public class Equation {
     File file = new File("../../project-code/Equations.txt");
     StringBuilder str = new StringBuilder();
 
-    try (FileReader fr = new FileReader(file))
-    {
-      int content;
-      while ((content = fr.read()) != -1) {
-        char currentChar = (char) content;
-        str.append(currentChar);
+    try (FileReader fr = new FileReader(file)) {
+        int content;
+        while ((content = fr.read()) != -1) {
+          char currentChar = (char) content;
+          str.append(currentChar);
       }
     } catch (IOException e) {
       e.printStackTrace();
