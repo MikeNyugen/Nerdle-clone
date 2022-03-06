@@ -33,7 +33,6 @@ public class NumbleClient {
     public Integer createNewGame(String mode) throws URISyntaxException, IOException, InterruptedException, org.json.simple.parser.ParseException {
         HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "new_game?mode=" + mode)).POST(HttpRequest.BodyPublishers.noBody()).build();
         var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
-        System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
         return Integer.valueOf(json.get("game_id").toString());
@@ -48,7 +47,6 @@ public class NumbleClient {
         HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "get_target/" + game_id.toString())).
                 GET().build();
         var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
-        System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
         if (response.statusCode() == 200) {
@@ -63,7 +61,6 @@ public class NumbleClient {
         HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "get_target_result/" + game_id.toString())).
                 GET().build();
         var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
-        System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
         if (response.statusCode() == 200) {
@@ -78,7 +75,6 @@ public class NumbleClient {
         HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "has_won/" + game_id.toString())).
                 GET().build();
         var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
-        System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
         if (response.statusCode() == 200) {
@@ -93,7 +89,6 @@ public class NumbleClient {
         HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "target_length/" + game_id.toString())).
                 GET().build();
         var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
-        System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
         if (response.statusCode() == 200) {
@@ -108,7 +103,6 @@ public class NumbleClient {
         var uri = new URI(endpoint + "check_guess/" + game_id.toString()) + "?guess=" + guess.replace('+', 'p');
         HttpRequest request = HttpRequest.newBuilder(URI.create(uri)).POST(HttpRequest.BodyPublishers.noBody()).build();
         var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
-        System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
         if (response.statusCode() == 200) {
@@ -127,7 +121,6 @@ public class NumbleClient {
         HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "has_lost/" + game_id.toString())).
                 GET().build();
         var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
-        System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
         if (response.statusCode() == 200) {
