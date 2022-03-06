@@ -40,6 +40,7 @@ public class Evaluator {
                 case '+': return PLUS;
                 case '-': return MINUS;
                 case 'x': return MUL;
+                case '*': return MUL;
                 case '/': return DIV;
                 default: throw new RuntimeException("unreachable code reached, probably bad equation used");
             }

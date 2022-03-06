@@ -86,6 +86,7 @@ public class GameTest {
     Game game = new Game("11+1", "13");
     assertFalse(game.doesItResultInCorrectSolution("10+2"));
     assertTrue(game.doesItResultInCorrectSolution("10+3"));
+    assertTrue(game.doesItResultInCorrectSolution("3+2*2+3"));
   }
 
 }
