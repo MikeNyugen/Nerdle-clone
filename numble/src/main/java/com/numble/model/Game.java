@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * Model of the game class
+ */
 public class Game implements GameInterface {
   private String target = null;
   private String targetResult = null;
@@ -15,6 +18,10 @@ public class Game implements GameInterface {
   private int guessesRemaining = 5;
   private Mode gameMode;
 
+  /**
+   * Constructor to create a game which selects an equation from file
+   * @param mode the game mode
+   */
   public Game(String mode) {
     Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPairFromDoc();
     target = equationResultPair.getEquation();
@@ -23,10 +30,12 @@ public class Game implements GameInterface {
     setGameMode(mode);
   }
 
-  public Game() {
-    this("EASY");
-  }
-
+  /**
+   * Constructor where you can set what needs guessing, the result, and game mdode
+   * @param target the part of the equation which the user must guess
+   * @param result the result of the equation
+   * @param mode the game difficulty
+   */
   public Game(String target, String result, String mode) {
     this.target = target;
     this.targetResult = result;
@@ -34,10 +43,20 @@ public class Game implements GameInterface {
     setGameMode(mode);
   }
 
+  /**
+   * Constructor where default mode is easy
+   * @param target part of the equation which the user must guess
+   * @param result the result of the equation
+   */
   public Game(String target, String result) {
     this(target, result, "EASY");
   }
 
+  /**
+   * Method to check the user guess
+   * @param userGuessArray an array of each character the user enters in their guess
+   * @return an array list of colours which represent the "success" of each character guess
+   */
   @Override
   public ArrayList<Colour> checkGuess(ArrayList<String> userGuessArray) {
     String[] targetArray = target.split("");
@@ -58,13 +77,22 @@ public class Game implements GameInterface {
     guessesRemaining--;
     return colourCode;
   }
-  
+
+  /**
+   * initializes initial array of colours, length of the target, default colour grey
+   * @param targetList list of characters the user must guess
+   */
   void initializeColours(ArrayList<String> targetList) {
     for (int i = 0; i < targetList.size(); i++) {
       colourCode.add(Colour.GREY);
     }
   }
 
+  /**
+   * checks which character guesses are exactly correct
+   * @param userGuessArray array list of the users guess
+   * @param targetList array list which the user must guess
+   */
   void setGreenTiles(ArrayList<String> userGuessArray, ArrayList<String> targetList) {
     for (int i = 0; i < userGuessArray.size(); i++) {
       String number = userGuessArray.get(i);
@@ -78,6 +106,11 @@ public class Game implements GameInterface {
     }
   }
 
+  /**
+   * checks which character guesses are partially correct
+   * @param userGuessArray array list of the users guess
+   * @param targetList array list which the user must guess
+   */
   void setOrangeTiles(ArrayList<String> userGuessArray, ArrayList<String> targetList) {
     for (int i = 0; i < userGuessArray.size(); i++) {
       String number = userGuessArray.get(i);
@@ -90,6 +123,10 @@ public class Game implements GameInterface {
     }
   }
 
+  /**
+   * checks whether the user has won or not
+   * @return true if the user has won
+   */
   @Override
   public boolean hasWon() {
     if (colourCode == null) {
@@ -99,21 +136,38 @@ public class Game implements GameInterface {
     }
   }
 
+  /**
+   * checks whether the user has lost or not
+   * @return true if the user has lost
+   */
   @Override
   public boolean hasLost() {
     return (guessesRemaining == 0) && (!hasWon());
   }
 
+  /**
+   * method to get the target of this game
+   * @return what the user should be guessing
+   */
   @Override
   public String getTarget() {
     return target;
   }
 
+  /**
+   * method to get the result of the equation
+   * @return the result of the equation
+   */
   @Override
   public String getTargetResult() {
     return targetResult;
   }
 
+  /**
+   * checks if the users guess results in the result they are guessing for
+   * @param userGuessArray array of the users guess
+   * @return true if the equation the user has guessed results in the desired solution
+   */
   public boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray) {
     StringBuilder guess = new StringBuilder();
     int i;
@@ -136,11 +190,17 @@ public class Game implements GameInterface {
     }
   }
 
-  //For hard mode, user will guess = sign as well
+  /**
+   * adds equals sing onto part which the user must guess
+   */
   public void addEqualsOntoTarget() {
     target = target + "=" + targetResult;
   }
 
+  /**
+   * method to set the game mode
+   * @param gameModeIn game mode
+   */
   private void setGameMode(String gameModeIn) {
     switch (gameModeIn) {
       case "EASY":

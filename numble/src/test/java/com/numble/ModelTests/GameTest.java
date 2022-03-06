@@ -70,7 +70,7 @@ public class GameTest {
 
   @Test
   void equationTest() {
-    assertDoesNotThrow(() -> new Game());
+    assertDoesNotThrow(() -> new Game("EASY"));
   }
 
   @Test
