@@ -30,8 +30,7 @@ public class NumbleAPI {
         var result = mapper.createObjectNode();
         result.put("status", "OK");
         result.put("game_id", nextGameID);
-        games.put(nextGameID, new Game());
-        games.get(nextGameID).setGameMode(mode);
+        games.put(nextGameID, new Game(mode));
         result.put("target_result", games.get(nextGameID).getTargetResult());
         nextGameID++;
         return result;

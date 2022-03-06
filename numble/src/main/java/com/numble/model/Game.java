@@ -14,17 +14,27 @@ public class Game implements GameInterface {
   private int guessesRemaining = 5;
   private Mode gameMode;
 
-  public Game() {
+  public Game(String mode) {
     Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPair();
     target = (String) equationResultPair.getEquation();
     targetResult = (String) equationResultPair.getResult();
     remainingCharList = new ArrayList<>();
+    setGameMode(mode);
   }
 
-  public Game(String target, String result) {
+  public Game() {
+    this("EASY");
+  }
+
+  public Game(String target, String result, String mode) {
     this.target = target;
     this.targetResult = result;
     remainingCharList = new ArrayList<>();
+    setGameMode(mode);
+  }
+
+  public Game(String target, String result) {
+    this(target, result, "EASY");
   }
 
   @Override
@@ -44,9 +54,7 @@ public class Game implements GameInterface {
         }
       }
     }
-
     guessesRemaining--;
-
     return colourCode;
   }
   
@@ -105,7 +113,6 @@ public class Game implements GameInterface {
     return targetResult;
   }
 
-  @Override
   public boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray) {
     StringBuilder guess = new StringBuilder();
     for (String s : userGuessArray) {
@@ -120,20 +127,24 @@ public class Game implements GameInterface {
     target = target + "=";
   }
 
-  @Override
-  public void setGameMode(String gameModeIn) {
+  private void setGameMode(String gameModeIn) {
     switch (gameModeIn) {
-      case "EASY": gameMode = Mode.EASY;
-      break;
-      case "MEDIUM": gameMode = Mode.MEDIUM;
-      addEqualsOntoTarget();
-      break;
-      case "HARD": gameMode = Mode.HARD;
-      break;
-      case "SUPERHARD": gameMode = Mode.SUPERHARD;
-      addEqualsOntoTarget();
-      break;
-      default: gameMode = Mode.EASY;
+      case "EASY":
+        gameMode = Mode.EASY;
+        break;
+      case "MEDIUM":
+        gameMode = Mode.MEDIUM;
+        addEqualsOntoTarget();
+        break;
+      case "HARD":
+        gameMode = Mode.HARD;
+        break;
+      case "SUPERHARD":
+        gameMode = Mode.SUPERHARD;
+        addEqualsOntoTarget();
+        break;
+      default:
+        gameMode = Mode.EASY;
     }
   }
 
