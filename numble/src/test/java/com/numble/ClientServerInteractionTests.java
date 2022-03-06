@@ -23,7 +23,7 @@ public class ClientServerInteractionTests {
             }
         });
         server.start();
-        Thread.sleep(2000);
+        Thread.sleep(2500);
     }
 
     @Test
