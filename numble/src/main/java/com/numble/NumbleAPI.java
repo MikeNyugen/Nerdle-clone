@@ -24,14 +24,11 @@ public class NumbleAPI {
 
     @PostMapping("/new_game")
     public ObjectNode newGame(@RequestParam String mode) {
-        System.out.println("newGame:");
-        System.out.println(mode);
         ObjectMapper mapper = new ObjectMapper();
         var result = mapper.createObjectNode();
         result.put("status", "OK");
         result.put("game_id", nextGameID);
         games.put(nextGameID, new Game(mode));
-        result.put("target_result", games.get(nextGameID).getTargetResult());
         nextGameID++;
         return result;
     }
@@ -95,9 +92,6 @@ public class NumbleAPI {
             var result = mapper.createObjectNode();
             result.put("status", "OK");
             guess = guess.replaceAll("p", "+");
-            System.err.println(guess);
-            System.err.println(games.get(id).getTarget());
-            System.err.flush();
             if (guess.length() != games.get(id).getTarget().length()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "guess has wrong length");
             }
