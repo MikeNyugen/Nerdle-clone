@@ -125,7 +125,7 @@ public class Game implements GameInterface {
 
   //For hard mode, user will guess = sign as well
   public void addEqualsOntoTarget() {
-    target = target + "=";
+    target = target + "=" + targetResult;
   }
 
   private void setGameMode(String gameModeIn) {

@@ -3,7 +3,6 @@ package com.numble.ModelTests;
 import com.numble.model.Colour;
 import com.numble.model.Game;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.notification.RunListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,7 +109,7 @@ public class GameTest {
     var ret = game.checkGuess(guess);
     assertFalse(game.hasWon());
     guess = new ArrayList<String>(
-            Arrays.asList("1", "1", "+", "2", "=", "1", "2"));
+            Arrays.asList("1", "1", "+", "1", "=", "1", "2"));
     ret = game.checkGuess(guess);
     assertTrue(game.hasWon());
   }
