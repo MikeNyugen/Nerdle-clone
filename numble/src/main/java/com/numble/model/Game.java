@@ -38,7 +38,7 @@ public class Game implements GameInterface {
     setGreenTiles(userGuessArray, targetList);
     setOrangeTiles(userGuessArray, targetList);
 
-    if ((getGameMode().equals(Mode.HARD)) || (getGameMode().equals(Mode.SUPERHARD))) {
+    if ((gameMode.equals(Mode.HARD)) || (gameMode.equals(Mode.SUPERHARD))) {
       if (!doesItResultInCorrectSolution(userGuessArray)) {
         for (int i = 0; i < userGuessArray.size(); i++) {
           colourCode.set(i, Colour.PURPLE);
@@ -134,10 +134,6 @@ public class Game implements GameInterface {
       break;
       default: gameMode = Mode.EASY;
     }
-  }
-
-  public Mode getGameMode() {
-    return gameMode;
   }
 
 }
