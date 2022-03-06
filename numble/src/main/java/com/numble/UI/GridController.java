@@ -61,7 +61,7 @@ public class GridController extends JComponent {
     xPosition = calculateXPos();
   }
 
-  public ArrayList<ArrayList<Cell>> initializeGrid() {
+  public void initializeGrid() {
     int startX = calculateXPos();
     int startY = 50;
     for (int i = 0; i < 5; i++) {
@@ -74,13 +74,11 @@ public class GridController extends JComponent {
       startY += 90;
       startX = calculateXPos();
     }
-    return grid;
   }
 
   int calculateXPos() {
     int startPosition = 0;
     int emptySpace = 1000 - (90 * columns);
-
     for (int i = 0; i < emptySpace / 2; i++) {
       startPosition++;
     }

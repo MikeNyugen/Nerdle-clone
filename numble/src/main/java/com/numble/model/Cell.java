@@ -2,7 +2,6 @@ package com.numble.model;
 
 public class Cell {
   String value;
-  boolean occupied;
   int xPosition;
   int yPosition;
   Colour colour;
@@ -11,32 +10,15 @@ public class Cell {
     this.xPosition = xPosition;
     this.yPosition = yPosition;
     value = " ";
-    occupied = false;
-    colour = Colour.GREY;
-  }
-
-  public Cell(int x, int y, String value) {
-    this.xPosition = x;
-    this.yPosition = y;
-    this.value = value;
-    occupied = true;
-    colour = Colour.GREY;
+    colour = Colour.WHITE;
   }
 
   public int getxPosition() {
     return xPosition;
   }
 
-  public void setxPosition(int xPosition) {
-    this.xPosition = xPosition;
-  }
-
   public int getyPosition() {
     return yPosition;
-  }
-
-  public void setyPosition(int yPosition) {
-    this.yPosition = yPosition;
   }
 
   public void setValue(String value) {
@@ -45,14 +27,6 @@ public class Cell {
 
   public String getValue() {
     return value;
-  }
-
-  public boolean getOccupied() {
-    return occupied;
-  }
-
-  public void setOccupied(boolean occupied) {
-    this.occupied = occupied;
   }
 
   public void setColour(Colour colour) {

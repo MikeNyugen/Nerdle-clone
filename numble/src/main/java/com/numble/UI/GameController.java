@@ -15,12 +15,11 @@ import java.util.Arrays;
 import java.util.Hashtable;
 
 public class GameController {
-  private GameView gameView;
-  private ArrayList<ArrayList<Cell>> grid;
-  private ArrayList<JButton> calculator;
-  private ArrayList<JLabel> values;
-  private Hashtable<String, Hashtable<Colour, Color>> colourMapping;
-  private StringBuilder userGuess;
+  private final GameView gameView;
+  private final ArrayList<JButton> calculator;
+  private final ArrayList<JLabel> values;
+  private final Hashtable<String, Hashtable<Colour, Color>> colourMapping;
+  private final StringBuilder userGuess;
   String[] userGuessArr;
   ArrayList<String> userGuessList;
   ArrayList<Colour> colourCode;
@@ -29,7 +28,7 @@ public class GameController {
 
   private int gridIndex = 0;
   private int row = 0;
-  private int columns;
+  private final int columns;
 
   GridController gridController;
 
@@ -74,7 +73,7 @@ public class GameController {
         if (gridIndex != client.getTargetLength(gameID)) {
           gridController.getGrid().get(row).get(gridIndex).setValue(value);
           userGuess.append(gridController.getGrid().get(row).get(gridIndex).getValue());
-          int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 32;
+          int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 31;
           int y = gridController.getGrid().get(row).get(gridIndex).getyPosition() + 15;
           drawValue(x, y, value);
           gridIndex++;
@@ -139,7 +138,6 @@ public class GameController {
           } catch (URISyntaxException | IOException | InterruptedException | ParseException ex) {
             ex.printStackTrace();
           }
-
           colourGrid(colourCode, userGuessList);
           colourKeyboard(colourCode, userGuessList);
           reset();
