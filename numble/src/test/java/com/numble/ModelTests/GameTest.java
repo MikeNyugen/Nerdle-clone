@@ -114,4 +114,20 @@ public class GameTest {
     assertTrue(game.hasWon());
   }
 
+  @Test
+  void testSuperHardMode() {
+    Game game = new Game("11+1", "12", "SUPERHARD");
+    ArrayList<String> guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "2", "=", "1", "2"));
+    var ret = game.checkGuess(guess);
+    for (var v : ret) {
+      assertEquals(Colour.PURPLE, v);
+    }
+    assertFalse(game.hasWon());
+    guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "1", "=", "1", "2"));
+    ret = game.checkGuess(guess);
+    assertTrue(game.hasWon());
+  }
+
 }

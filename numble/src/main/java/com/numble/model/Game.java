@@ -117,6 +117,9 @@ public class Game implements GameInterface {
   public boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray) {
     StringBuilder guess = new StringBuilder();
     for (String s : userGuessArray) {
+      if (s.equals("=")) {
+        break;
+      }
       guess.append(s);
     }
     var guessResult = Evaluator.evaluate(String.valueOf(guess));
