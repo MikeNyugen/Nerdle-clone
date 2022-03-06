@@ -5,6 +5,7 @@ import com.numble.evaluator.Evaluator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Game implements GameInterface {
   private String target = null;
@@ -94,7 +95,7 @@ public class Game implements GameInterface {
     if (colourCode == null) {
       return false;
     } else {
-      return !(colourCode.contains(Colour.ORANGE) || (colourCode.contains(Colour.GREY)));
+      return Collections.frequency(colourCode, Colour.GREEN) == colourCode.size();
     }
   }
 

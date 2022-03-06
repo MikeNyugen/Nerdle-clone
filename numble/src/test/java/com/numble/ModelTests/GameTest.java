@@ -84,4 +84,21 @@ public class GameTest {
     assertTrue(game.doesItResultInCorrectSolution(userGuess2));
   }
 
+  @Test
+  void testHardMode() {
+    Game game = new Game("11+1", "12", "HARD");
+    ArrayList<String> guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "2"));
+    var ret = game.checkGuess(guess);
+    for (var v : ret) {
+      assertEquals(Colour.PURPLE, v);
+    }
+    assertFalse(game.hasWon());
+    assertFalse(game.hasLost());
+    guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "1"));
+    ret = game.checkGuess(guess);
+    assertTrue(game.hasWon());
+  }
+
 }
