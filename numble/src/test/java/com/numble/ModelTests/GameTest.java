@@ -1,21 +1,13 @@
 package com.numble.ModelTests;
 
 import com.numble.model.Colour;
-import com.numble.model.Equation;
 import com.numble.model.Game;
-import com.fathzer.soft.javaluator.DoubleEvaluator;
-import org.apache.el.lang.ExpressionBuilder;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-import java.beans.Expression;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class GameTest {
 
