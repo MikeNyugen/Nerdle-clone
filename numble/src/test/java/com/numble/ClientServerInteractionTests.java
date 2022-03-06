@@ -77,6 +77,16 @@ public class ClientServerInteractionTests {
         assertFalse(client.hasLost(thirdUser));
     }
 
+    @Test
+    void testModes() throws URISyntaxException, IOException, ParseException, InterruptedException {
+        for (var mode : new String[] {"EASY", "MEDIUM", "HARD", "SUPERHARD"}) {
+            var game = client.createNewGame(mode);
+            var target = client.getTarget(game);
+            client.checkGuess(game, target);
+            assertTrue(client.hasWon(game));
+        }
+    }
+
     @AfterAll
     static void after() {
         server.stop();
