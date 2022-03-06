@@ -19,6 +19,9 @@ public class Game implements GameInterface {
     Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPair();
     target = (String) equationResultPair.getEquation();
     targetResult = (String) equationResultPair.getResult();
+    if (targetResult.charAt(0) == '=') {
+      targetResult = targetResult.substring(1);
+    }
     remainingCharList = new ArrayList<>();
     setGameMode(mode);
   }
