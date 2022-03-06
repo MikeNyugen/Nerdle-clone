@@ -84,4 +84,57 @@ public class GameTest {
     assertTrue(game.doesItResultInCorrectSolution(userGuess2));
   }
 
+  @Test
+  void testHardMode() {
+    Game game = new Game("11+1", "12", "HARD");
+    ArrayList<String> guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "2"));
+    var ret = game.checkGuess(guess);
+    for (var v : ret) {
+      assertEquals(Colour.PURPLE, v);
+    }
+    assertFalse(game.hasWon());
+    assertFalse(game.hasLost());
+    guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "1"));
+    ret = game.checkGuess(guess);
+    assertTrue(game.hasWon());
+  }
+
+  @Test
+  void testMediumMode() {
+    Game game = new Game("11+1", "12", "MEDIUM");
+    ArrayList<String> guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "2"));
+    var ret = game.checkGuess(guess);
+    assertFalse(game.hasWon());
+    guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "1", "=", "1", "2"));
+    ret = game.checkGuess(guess);
+    assertTrue(game.hasWon());
+  }
+
+  @Test
+  void testSuperHardMode() {
+    Game game = new Game("11+1", "12", "SUPERHARD");
+    ArrayList<String> guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "2", "=", "1", "2"));
+    var ret = game.checkGuess(guess);
+    for (var v : ret) {
+      assertEquals(Colour.PURPLE, v);
+    }
+    assertFalse(game.hasWon());
+    guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "2", "=", "1", "3"));
+    ret = game.checkGuess(guess);
+    assertEquals(Colour.GREEN, ret.get(0));
+    assertEquals(Colour.GREEN, ret.get(1));
+    assertEquals(Colour.ORANGE, ret.get(3));
+    assertEquals(Colour.GREY, ret.get(6));
+    guess = new ArrayList<String>(
+            Arrays.asList("1", "1", "+", "1", "=", "1", "2"));
+    ret = game.checkGuess(guess);
+    assertTrue(game.hasWon());
+  }
+
 }

@@ -5,6 +5,7 @@ import com.numble.evaluator.Evaluator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Game implements GameInterface {
   private String target = null;
@@ -15,9 +16,9 @@ public class Game implements GameInterface {
   private Mode gameMode;
 
   public Game(String mode) {
-    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPair();
-    target = (String) equationResultPair.getEquation();
-    targetResult = (String) equationResultPair.getResult();
+    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPairFromDoc();
+    target = equationResultPair.getEquation();
+    targetResult = equationResultPair.getResult();
     remainingCharList = new ArrayList<>();
     setGameMode(mode);
   }
@@ -94,7 +95,7 @@ public class Game implements GameInterface {
     if (colourCode == null) {
       return false;
     } else {
-      return !(colourCode.contains(Colour.ORANGE) || (colourCode.contains(Colour.GREY)));
+      return Collections.frequency(colourCode, Colour.GREEN) == colourCode.size();
     }
   }
 
@@ -115,16 +116,29 @@ public class Game implements GameInterface {
 
   public boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray) {
     StringBuilder guess = new StringBuilder();
-    for (String s : userGuessArray) {
+    int i;
+    for (i = 0; i < userGuessArray.size(); i++) {
+      var s = userGuessArray.get(i);
+      if (s.equals("=")) {
+        break;
+      }
       guess.append(s);
     }
     var guessResult = Evaluator.evaluate(String.valueOf(guess));
-    return Integer.valueOf(targetResult).equals(guessResult);
+    if (gameMode == Mode.EASY || gameMode == Mode.HARD) {
+      return Integer.valueOf(targetResult).equals(guessResult);
+    } else {
+      StringBuilder userResult = new StringBuilder();
+      for (i = i + 1; i < userGuessArray.size(); i++) {
+        userResult.append(userGuessArray.get(i));
+      }
+      return Integer.valueOf(userResult.toString()).equals(guessResult);
+    }
   }
 
   //For hard mode, user will guess = sign as well
   public void addEqualsOntoTarget() {
-    target = target + "=";
+    target = target + "=" + targetResult;
   }
 
   private void setGameMode(String gameModeIn) {
