@@ -1,6 +1,7 @@
 package com.numble.EvaluatorTests;
 
 import com.numble.evaluator.Evaluator;
+import com.numble.evaluator.EvaluatorException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,5 +20,21 @@ public class EvaluatorTest {
         assertEquals(8, Evaluator.evaluate("4+(2x2)"));
         assertEquals(20, Evaluator.evaluate("4+(6+2x2)"));
         assertEquals(14, Evaluator.evaluate("4+(6+(2x2))"));
+    }
+
+    @Test
+    public void testBadInput() {
+        assertThrows(EvaluatorException.class, () -> Evaluator.evaluate("1++2"));
+        assertThrows(EvaluatorException.class, () -> Evaluator.evaluate("++"));
+        assertThrows(EvaluatorException.class, () -> Evaluator.evaluate("+"));
+        try {
+            Evaluator.evaluate("(1+2");
+            fail();
+        } catch (EvaluatorException exception) {
+            assertEquals("expected operation, found class com.numble.evaluator.Evaluator$Bracket", exception.getMessage());
+        }
+        assertThrows(EvaluatorException.class, () -> Evaluator.evaluate("1+2)"));
+        assertThrows(EvaluatorException.class, () -> Evaluator.evaluate("11 11"));
+        assertThrows(EvaluatorException.class, () -> Evaluator.evaluate(""));
     }
 }

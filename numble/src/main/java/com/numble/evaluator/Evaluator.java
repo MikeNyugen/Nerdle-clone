@@ -42,7 +42,7 @@ public class Evaluator {
                 case 'x': return MUL;
                 case '*': return MUL;
                 case '/': return DIV;
-                default: throw new RuntimeException("unreachable code reached, probably bad equation used");
+                default: throw new EvaluatorException("unknown operation");
             }
         }
     }
@@ -92,18 +92,24 @@ public class Evaluator {
         return evaluate(tokens).number;
     }
 
-    static public Number evaluate(List<EvaluatorToken> tokens) {
+    static private Number evaluate(List<EvaluatorToken> tokens) {
+        if (tokens.isEmpty()) {
+            throw new EvaluatorException("empty expression received");
+        }
         int last_token_index = tokens.size() - 1;
         if (tokens.get(last_token_index) instanceof Bracket) {
             int i = last_token_index;
             int balance = 1;
-            while (balance != 0) {
+            while (balance != 0 && i > 0) {
                 i--;
                 if (tokens.get(i) instanceof Bracket && tokens.get(i) == Bracket.CLOSING) {
                     balance++;
                 } else if (tokens.get(i) instanceof Bracket && tokens.get(i) == Bracket.OPENING) {
                     balance--;
                 }
+            }
+            if (i == 0) {
+                throw new EvaluatorException("matching bracket not found");
             }
             var last_bracket = evaluate(tokens.subList(i + 1, last_token_index));
             tokens = tokens.subList(0, i);
@@ -112,10 +118,24 @@ public class Evaluator {
         } else {
             // last token is a number
             if (tokens.size() == 1) {
-                return (Number) tokens.get(0);
+                try {
+                    return (Number) tokens.get(0);
+                } catch (ClassCastException exc) {
+                    throw new EvaluatorException("the only token is not a number");
+                }
             }
-            Number last_number = (Number) tokens.get(last_token_index);
-            Operation operation = (Operation) tokens.get(last_token_index - 1);
+            Number last_number;
+            try {
+                last_number = (Number) tokens.get(last_token_index);
+            } catch (ClassCastException exception) {
+                throw new EvaluatorException("found non-number element after number");
+            }
+            Operation operation;
+            try {
+                operation = (Operation) tokens.get(last_token_index - 1);
+            } catch (ClassCastException exc) {
+                throw new EvaluatorException("expected operation, found " + tokens.get(last_token_index - 1).getClass().toString());
+            }
             return new Number(combine(evaluate(tokens.subList(0, last_token_index - 1)), operation, last_number));
         }
     }
