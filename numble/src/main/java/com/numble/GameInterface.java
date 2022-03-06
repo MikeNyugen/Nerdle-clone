@@ -37,10 +37,4 @@ public interface GameInterface {
    * @return string result of equation
    */
   String getTargetResult();
-
-
-  void setGameMode(String gameModeIn);
-
-
-  boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray);
 }

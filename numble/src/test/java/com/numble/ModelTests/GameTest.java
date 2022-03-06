@@ -14,7 +14,6 @@ public class GameTest {
   @Test
   void checkGuessTest() {
     Game game = new Game("12+6", "=18");
-    game.setGameMode("EASY");
     ArrayList<String> userGuess = new ArrayList<String>(
         Arrays.asList("1", "1", "+", "5"));
     ArrayList<Colour> expected = new ArrayList<>(Arrays.asList(Colour.GREEN, Colour.GREY, Colour.GREEN, Colour.GREY));
@@ -25,7 +24,6 @@ public class GameTest {
   @Test
   void anotherCheckGuessTest() {
     Game game = new Game("4321+11", "=4332");
-    game.setGameMode("EASY");
     assertEquals("4321+11", game.getTarget());
     ArrayList<String> userGuess = new ArrayList<String>(
         Arrays.asList("1", "1", "1", "1", "+", "2", "2"));
@@ -39,7 +37,6 @@ public class GameTest {
   @Test
   void hasWonTest() {
     Game game = new Game("11+1", "=13");
-    game.setGameMode("EASY");
     assertFalse(game.hasWon());
 
     ArrayList<String> userGuess1 = new ArrayList<String>(
@@ -56,7 +53,6 @@ public class GameTest {
   @Test
   void hasLostTest() {
     Game game = new Game("11+1", "=13");
-    game.setGameMode("EASY");
     assertFalse(game.hasLost());
     ArrayList<String> userGuess1 = new ArrayList<String>(
      Arrays.asList("1", "1", "+", "2"));
