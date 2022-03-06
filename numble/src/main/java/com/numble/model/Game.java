@@ -37,6 +37,14 @@ public class Game implements GameInterface {
     setGreenTiles(userGuessArray, targetList);
     setOrangeTiles(userGuessArray, targetList);
 
+    if ((gameMode.equals(Mode.HARD)) || (gameMode.equals(Mode.SUPERHARD))) {
+      if (!doesItResultInCorrectSolution(userGuessArray)) {
+        for (int i = 0; i < userGuessArray.size(); i++) {
+          colourCode.set(i, Colour.PURPLE);
+        }
+      }
+    }
+
     guessesRemaining--;
 
     return colourCode;
