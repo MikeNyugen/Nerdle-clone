@@ -16,12 +16,9 @@ public class Game implements GameInterface {
   private Mode gameMode;
 
   public Game(String mode) {
-    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPair();
-    target = (String) equationResultPair.getEquation();
-    targetResult = (String) equationResultPair.getResult();
-    if (targetResult.charAt(0) == '=') {
-      targetResult = targetResult.substring(1);
-    }
+    Equation.Pair<String, String> equationResultPair = Equation.getEquationResultPairFromDoc();
+    target = equationResultPair.getEquation();
+    targetResult = equationResultPair.getResult();
     remainingCharList = new ArrayList<>();
     setGameMode(mode);
   }

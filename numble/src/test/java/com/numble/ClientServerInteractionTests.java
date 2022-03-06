@@ -29,32 +29,30 @@ public class ClientServerInteractionTests {
     @Test
     public void firstTest() throws URISyntaxException, IOException, ParseException, InterruptedException {
         var first_game = client.createNewGame();
-        assertEquals(0, first_game);
-        var target = client.getTarget(0);
-        assertFalse(client.hasWon(0));
-        var colours = client.checkGuess(0, target);
+        var target = client.getTarget(first_game);
+        assertFalse(client.hasWon(first_game));
+        var colours = client.checkGuess(first_game, target);
         assertEquals(colours.size(), target.length());
         for (var colour : colours) {
             assertEquals(colour, Colour.GREEN);
         }
-        assertTrue(client.hasWon(0));
-        assertDoesNotThrow(() -> client.getTargetResult(0));
-        assertThrows(RuntimeException.class, () -> client.hasWon(1));
-        assertThrows(RuntimeException.class, () -> client.checkGuess(1, ""));
-        assertThrows(RuntimeException.class, () -> client.getTarget(1));
-        assertThrows(RuntimeException.class, () -> client.getTargetLength(1));
-        assertThrows(RuntimeException.class, () -> client.getTargetResult(1));
+        assertTrue(client.hasWon(first_game));
+        assertDoesNotThrow(() -> client.getTargetResult(first_game));
+        assertThrows(RuntimeException.class, () -> client.hasWon(first_game + 1));
+        assertThrows(RuntimeException.class, () -> client.checkGuess(first_game + 1, ""));
+        assertThrows(RuntimeException.class, () -> client.getTarget(first_game + 1));
+        assertThrows(RuntimeException.class, () -> client.getTargetLength(first_game + 1));
+        assertThrows(RuntimeException.class, () -> client.getTargetResult(first_game + 1));
         var second_game = client.createNewGame();
-        assertEquals(1, second_game);
-        assertThrows(RuntimeException.class, () -> client.checkGuess(1, ""));
+        assertThrows(RuntimeException.class, () -> client.checkGuess(second_game, ""));
         try {
-            client.checkGuess(1, "");
+            client.checkGuess(second_game, "");
         } catch (RuntimeException exception) {
             assertEquals(exception.getMessage(), "guess has wrong length");
         }
-        target = client.getTarget(1);
+        target = client.getTarget(second_game);
         target = target.replace(target.charAt(0), target.charAt(1));
-        colours = client.checkGuess(1, target);
+        colours = client.checkGuess(second_game, target);
         assertNotEquals(colours.get(0), 0);
     }
 

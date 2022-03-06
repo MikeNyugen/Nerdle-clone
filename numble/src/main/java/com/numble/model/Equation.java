@@ -12,23 +12,6 @@ import java.util.Random;
 
 //does the need to be public *static* class?
 public class Equation {
-
-  //redundant if getEquationResultPairFromDoc is okay
-  static List<String> equations = new ArrayList<>(Arrays.asList("10+10", "63x2", "54x3", "10+1", "1+1"));
-  static List<String> equationResults = new ArrayList<>(Arrays.asList("=20", "=126", "=162", "=11", "=2"));
-
-  //redundant if getEquationResultPairFromDoc is okay
-  static Pair<String, String> getEquationResultPair() {
-    int index = getRandomIndex();
-    return new Pair<String, String>(equations.get(index), equationResults.get(index));
-  }
-
-  //redundant if getEquationResultPairFromDoc is okay
-  static int getRandomIndex() {
-    Random random = new Random();
-    return random.nextInt(equations.size() - 1);
-  }
-
   static class Pair<T1, T2> {
     private final T1 equation;
     private final T2 result;
