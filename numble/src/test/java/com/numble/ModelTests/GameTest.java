@@ -84,9 +84,12 @@ public class GameTest {
   @Test
   void doesItResultInCorrectSolutionTest() {
     Game game = new Game("11+1", "13");
-    assertFalse(game.doesItResultInCorrectSolution("10+2"));
-    assertTrue(game.doesItResultInCorrectSolution("10+3"));
-    assertTrue(game.doesItResultInCorrectSolution("3+2*2+3"));
+    ArrayList<String> userGuess1 = new ArrayList<String>(
+     Arrays.asList("1", "0", "+", "2"));
+    assertFalse(game.doesItResultInCorrectSolution(userGuess1));
+    ArrayList<String> userGuess2 = new ArrayList<String>(
+     Arrays.asList("1", "0", "+", "3"));
+    assertTrue(game.doesItResultInCorrectSolution(userGuess2));
   }
 
 }
