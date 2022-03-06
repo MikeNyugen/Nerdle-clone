@@ -1,7 +1,6 @@
 package com.numble.model;
 
 import com.numble.GameInterface;
-import com.fathzer.soft.javaluator.DoubleEvaluator;
 import com.numble.evaluator.Evaluator;
 
 import java.util.ArrayList;
