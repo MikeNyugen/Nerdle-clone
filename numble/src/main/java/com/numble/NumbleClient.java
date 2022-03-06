@@ -22,7 +22,7 @@ public class NumbleClient {
         this.endpoint = endpoint;
     }
 
-    NumbleClient() {
+    public NumbleClient() {
         this("http://localhost:8080/");
     }
 
