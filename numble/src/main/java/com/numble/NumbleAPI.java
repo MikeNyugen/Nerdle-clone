@@ -23,12 +23,15 @@ public class NumbleAPI {
     }
 
     @PostMapping("/new_game")
-    public ObjectNode newGame() {
+    public ObjectNode newGame(@RequestParam String mode) {
+        System.out.println("newGame:");
+        System.out.println(mode);
         ObjectMapper mapper = new ObjectMapper();
         var result = mapper.createObjectNode();
         result.put("status", "OK");
         result.put("game_id", nextGameID);
         games.put(nextGameID, new Game());
+        games.get(nextGameID).setGameMode(mode);
         result.put("target_result", games.get(nextGameID).getTargetResult());
         nextGameID++;
         return result;

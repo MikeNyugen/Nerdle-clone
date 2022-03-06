@@ -98,10 +98,11 @@ public class Game implements GameInterface {
     return targetResult;
   }
 
+  @Override
   public boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray) {
     StringBuilder guess = new StringBuilder();
-    for (int i = 0; i < userGuessArray.size(); i++) {
-      guess.append(userGuessArray.get(i));
+    for (String s : userGuessArray) {
+      guess.append(s);
     }
     var guessResult = Evaluator.evaluate(String.valueOf(guess));
     return Integer.valueOf(targetResult).equals(guessResult);
@@ -112,6 +113,7 @@ public class Game implements GameInterface {
     target = target + "=";
   }
 
+  @Override
   public void setGameMode(String gameModeIn) {
     switch (gameModeIn) {
       case "EASY": gameMode = Mode.EASY;

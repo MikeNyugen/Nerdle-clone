@@ -39,4 +39,8 @@ public interface GameInterface {
   String getTargetResult();
 
 
+  void setGameMode(String gameModeIn);
+
+
+  boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray);
 }

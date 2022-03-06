@@ -16,7 +16,7 @@ public class APITests {
 
     @Test
     public void createGame() {
-        client.post().uri("/new_game")
+        client.post().uri("/new_game?mode=EASY")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -41,7 +41,7 @@ public class APITests {
 
     @Test
     public void badLengthError() {
-        client.post().uri("/new_game")
+        client.post().uri("/new_game?mode=EASY")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -55,7 +55,7 @@ public class APITests {
 
     @Test
     public void checkMethods() {
-        client.post().uri("/new_game")
+        client.post().uri("/new_game?mode=EASY")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
