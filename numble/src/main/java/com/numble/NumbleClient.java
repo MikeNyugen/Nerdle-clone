@@ -30,13 +30,17 @@ public class NumbleClient {
         return new RuntimeException(json.get("message").toString());
     }
 
-    public Integer createNewGame() throws URISyntaxException, IOException, InterruptedException, org.json.simple.parser.ParseException {
-        HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "new_game")).POST(HttpRequest.BodyPublishers.noBody()).build();
+    public Integer createNewGame(String mode) throws URISyntaxException, IOException, InterruptedException, org.json.simple.parser.ParseException {
+        HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "new_game?mode=" + mode)).POST(HttpRequest.BodyPublishers.noBody()).build();
         var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
         System.err.println(response.body());
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(response.body());
         return Integer.valueOf(json.get("game_id").toString());
+    }
+
+    public Integer createNewGame() throws URISyntaxException, IOException, ParseException, InterruptedException {
+        return createNewGame("EASY");
     }
 
     public String getTarget(Integer game_id)
