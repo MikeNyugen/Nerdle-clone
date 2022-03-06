@@ -119,14 +119,24 @@ public class Game implements GameInterface {
 
   public boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray) {
     StringBuilder guess = new StringBuilder();
-    for (String s : userGuessArray) {
+    int i;
+    for (i = 0; i < userGuessArray.size(); i++) {
+      var s = userGuessArray.get(i);
       if (s.equals("=")) {
         break;
       }
       guess.append(s);
     }
     var guessResult = Evaluator.evaluate(String.valueOf(guess));
-    return Integer.valueOf(targetResult).equals(guessResult);
+    if (gameMode == Mode.EASY || gameMode == Mode.HARD) {
+      return Integer.valueOf(targetResult).equals(guessResult);
+    } else {
+      StringBuilder userResult = new StringBuilder();
+      for (i = i + 1; i < userGuessArray.size(); i++) {
+        userResult.append(userGuessArray.get(i));
+      }
+      return Integer.valueOf(userResult.toString()).equals(guessResult);
+    }
   }
 
   //For hard mode, user will guess = sign as well
