@@ -54,8 +54,10 @@ public class GridController extends JComponent {
           g2d.setColor(new Color(0, 163, 108));
         } else if (cell.getColour() == Colour.GREY) {
           g2d.setColor(Color.lightGray);
-        } else {
+        } else if(cell.getColour() == Colour.WHITE){
           g2d.setColor(Color.white);
+        } else if (cell.getColour() == Colour.PURPLE) {
+          g2d.setColor(new Color(128,0,128));
         }
         g2d.fillRoundRect(cell.getxPosition(), cell.getyPosition(),
                 80, 80, 10, 10);

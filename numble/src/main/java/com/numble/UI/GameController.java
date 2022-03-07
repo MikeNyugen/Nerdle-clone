@@ -167,6 +167,8 @@ public class GameController {
       } else if (colours.get(i) == Colour.ORANGE) {
         color = new Color(251, 177, 23);
         temp.put(colours.get(i), color);
+      } else if (colours.get(i) == Colour.PURPLE) {
+        temp.put(colours.get(i), Color.white);
       }
       colourMapping.put(userGuessList.get(i), temp);
     }
@@ -192,7 +194,7 @@ public class GameController {
   }
 
   private void winGame() {
-    JOptionPane.showMessageDialog(gameView.mainFrame, "Well done! You've guessed the equation.");
+    JOptionPane.showMessageDialog(gameView.mainFrame, "Well done! You've guessed the equation :)");
     gameView.mainFrame.repaint();
     for (JButton button : calculator) {
       button.setEnabled(false);

@@ -66,12 +66,15 @@ public class GameView extends JPanel {
         JOptionPane.showMessageDialog(mainFrame, "The resulting equation will not be displayed.");
         break;
       case "HARD":
-        JOptionPane.showMessageDialog(mainFrame, "Your guess must be equal to the target in order to be valid.");
+        String message = "Your guess must be equal to the target in order to be valid.\n" +
+                "Invalid guesses will show up in purple!";
+        JOptionPane.showMessageDialog(mainFrame, message);
         break;
       case "SUPERHARD":
-        String message = "Your guess must be equal to the target in order to be valid.\n" +
-                "The resulting equation will not be displayed";
-        JOptionPane.showMessageDialog(mainFrame, message);
+        String message2 = "Your guess must be equal to the target in order to be valid.\n" +
+                "The resulting equation will not be displayed\n" +
+                "Invalid guesses will show up in purple!";
+        JOptionPane.showMessageDialog(mainFrame, message2);
         break;
     }
   }
