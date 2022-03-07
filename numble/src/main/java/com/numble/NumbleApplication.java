@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class NumbleApplication {
 	public static void main(String[] args) {
-		Menu menu = new Menu();
+		//Menu menu = new Menu();
 		SpringApplication.run(NumbleApplication.class, args);
 	}
 }

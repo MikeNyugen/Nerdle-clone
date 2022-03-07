@@ -6,6 +6,7 @@ import com.numble.evaluator.Evaluator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Model of the game class
@@ -62,7 +63,7 @@ public class Game implements GameInterface {
    * @return an array list of colours which represent the "success" of each character guess
    */
   @Override
-  public ArrayList<Colour> checkGuess(ArrayList<String> userGuessArray) {
+  public List<Colour> checkGuess(List<String> userGuessArray) {
     String[] targetArray = target.split("");
     ArrayList<String> targetList = new ArrayList<>(Arrays.asList(targetArray));
     colourCode = new ArrayList<>();
@@ -87,7 +88,7 @@ public class Game implements GameInterface {
    *
    * @param targetList list of characters the user must guess
    */
-  void initializeColours(ArrayList<String> targetList) {
+  void initializeColours(List<String> targetList) {
     for (int i = 0; i < targetList.size(); i++) {
       colourCode.add(Colour.GREY);
     }
@@ -99,7 +100,7 @@ public class Game implements GameInterface {
    * @param userGuessArray array list of the users guess
    * @param targetList     array list which the user must guess
    */
-  void setGreenTiles(ArrayList<String> userGuessArray, ArrayList<String> targetList) {
+  void setGreenTiles(List<String> userGuessArray, List<String> targetList) {
     for (int i = 0; i < userGuessArray.size(); i++) {
       String number = userGuessArray.get(i);
       String targetNumber = targetList.get(i);
@@ -118,7 +119,7 @@ public class Game implements GameInterface {
    * @param userGuessArray array list of the users guess
    * @param targetList     array list which the user must guess
    */
-  void setOrangeTiles(ArrayList<String> userGuessArray, ArrayList<String> targetList) {
+  void setOrangeTiles(List<String> userGuessArray, List<String> targetList) {
     for (int i = 0; i < userGuessArray.size(); i++) {
       String number = userGuessArray.get(i);
       boolean correct = colourCode.get(i).equals(Colour.GREEN);
@@ -180,7 +181,7 @@ public class Game implements GameInterface {
    * @param userGuessArray array of the users guess
    * @return true if the equation the user has guessed results in the desired solution
    */
-  public boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray) {
+  public boolean doesItResultInCorrectSolution(List<String> userGuessArray) {
     StringBuilder guess = new StringBuilder();
     int i;
     for (i = 0; i < userGuessArray.size(); i++) {
@@ -192,11 +193,17 @@ public class Game implements GameInterface {
     }
     var guessResult = Evaluator.evaluate(String.valueOf(guess));
     if (gameMode == Mode.EASY || gameMode == Mode.HARD) {
-      return Integer.valueOf(targetResult).equals(guessResult);
+      if (targetResult.charAt(0) == '=') {
+        return Integer.valueOf(targetResult.substring(1)).equals(guessResult);
+      } else {
+        return Integer.valueOf(targetResult).equals(guessResult);
+      }
     } else {
       StringBuilder userResult = new StringBuilder();
       for (i = i + 1; i < userGuessArray.size(); i++) {
-        userResult.append(userGuessArray.get(i));
+        if (!userGuessArray.get(i).equals("=")) {
+          userResult.append(userGuessArray.get(i));
+        }
       }
       return Integer.valueOf(userResult.toString()).equals(guessResult);
     }

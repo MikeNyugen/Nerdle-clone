@@ -1,0 +1,39 @@
+POST method /new_game
+arguments: mode, which is one of EASY, MEDIUM, HARD, SUPERHARD
+this method created a new game and returns its id as an integer
+
+GET method /get_target/{id}
+arguments: id, which is game id
+this method returns the string the user is supposed to guess
+
+GET method /get_target_result/{id}
+arguments: id, which is game id
+this method returns the result of the equation (target)
+
+GET method /has_won/{id}
+arguments: id, which is game id
+this method tells whether the game has been won
+
+GET method /target_length/{id}
+arguments: id, which is game id
+returns the length of the target
+
+POST method /check_guess/{id}
+arguments: id (game id), guess (string with the guess of the user. 'p' should be used instead of '+')
+checks the guess and returns an array of colours to be displayed
+GREEN means that the character is in the right place
+ORANGE means that the character is present in the target, but in the wrong place
+GREY means that the charecter is not present
+PURPLE means that the user is supposed to enter expressions that evaluate to the correct result (is using HARD or SUPERHARD mode) and entered a wrong eqaution (e. g. 1+1=3)
+
+GET method /has_lost/{id}
+arguments: id (game id)
+this method tells whether the game has been lost (i. e. hasn`t been won and no guesses remain)
+
+example of a game:
+dima@dima-Latitude-5300:~$ curl -X POST localhost:8080/new_game?mode=EASY && echo
+{"status":"OK","game_id":3,"target_result":"3510"}
+dima@dima-Latitude-5300:~$ curl -X POST localhost:8080/check_guess/2/?guess=56/1 && echo
+{"status":"OK","colours":["GREEN","GREEN","GREEN","GREEN"]}
+dima@dima-Latitude-5300:~$ curl localhost:8080/has_won/2
+{"status":"OK","has_won":true}
