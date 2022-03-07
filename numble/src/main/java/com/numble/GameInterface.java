@@ -1,18 +1,16 @@
 package com.numble;
 
 import com.numble.model.Colour;
-import com.numble.model.Mode;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public interface GameInterface {
 
   /**
    * method to check the user's guess
    * @param userGuess the user guess
-   * @return arraylist containing the colour of each tile 
+   * @return arraylist containing the colour of each tile
    */
-  ArrayList<Colour> checkGuess(ArrayList<String> userGuess);
+  List<Colour> checkGuess(List<String> userGuess);
 
   /**
    * method to check if the user has won or not

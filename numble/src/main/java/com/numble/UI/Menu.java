@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 public class Menu {
 
   private final static int FRAME_WIDTH = 500;
-  private final static int FRAME_HEIGHT = 400;
+  private final static int FRAME_HEIGHT = 450;
 
   JFrame menuFrame;
 
@@ -28,10 +28,9 @@ public class Menu {
     setupFrame();
     displayTitle();
     easyButton();
+    mediumButton();
     hardButton();
-    option1();
-    option2();
-    option3();
+    superHardButton();
     menuFrame.paintAll(menuFrame.getGraphics());
   }
 
@@ -51,7 +50,7 @@ public class Menu {
     JLabel title = new JLabel("Numble");
     title.setBounds(140, 15, 300, 100);
     title.setFont(new Font("Comic Sans MS", Font.BOLD, 65));
-    title.setForeground(Color.ORANGE);
+    title.setForeground(new Color(255,215,0));
     menuFrame.add(title);
   }
 
@@ -61,25 +60,22 @@ public class Menu {
     setUpButton(easyMode, new Color(34, 139, 34));
   }
 
+  private void mediumButton() {
+    JButton mediumMode = new JButton("Medium Mode");
+    mediumMode.setBounds(180, 190, 150, 50);
+    setUpButton(mediumMode, Color.ORANGE);
+  }
+
   private void hardButton() {
     JButton hardMode = new JButton("Hard Mode");
-    hardMode.setBounds(180, 190, 150, 50);
-    setUpButton(hardMode, new Color(139, 0, 0));
+    hardMode.setBounds(180, 255, 150, 50);
+    setUpButton(hardMode, Color.RED);
   }
 
-  private void option1() {
-    JCheckBox option1 = new JCheckBox("Guess must add to correct solution");
-    setUpCheckbox(option1, 0);
-  }
-
-  private void option2() {
-    JCheckBox option2 = new JCheckBox("Correct guesses must be reused");
-    setUpCheckbox(option2, 30);
-  }
-
-  private void option3() {
-    JCheckBox option3 = new JCheckBox("No hint");
-    setUpCheckbox(option3, 60);
+  private void superHardButton() {
+    JButton superHardMode = new JButton("Super Hard Mode");
+    superHardMode.setBounds(180,320,150,50);
+    setUpButton(superHardMode, new Color(139,0,0));
   }
 
   private void setUpButton(JButton button, Color color) {
@@ -114,10 +110,4 @@ public class Menu {
     menuFrame.add(button);
   }
 
-  private void setUpCheckbox(JCheckBox checkbox, int space) {
-    checkbox.setBounds(145, 260 + space, 300, 20);
-    checkbox.setFont(new Font("Arial", Font.PLAIN, 14));
-    checkbox.setFocusPainted(false);
-    menuFrame.add(checkbox);
-  }
 }

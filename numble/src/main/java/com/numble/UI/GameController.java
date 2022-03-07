@@ -1,9 +1,7 @@
 package com.numble.UI;
 
 import com.numble.NumbleClient;
-import com.numble.model.Cell;
 import com.numble.model.Colour;
-import com.numble.model.Game;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
@@ -32,7 +30,8 @@ public class GameController {
 
   GridController gridController;
 
-  public GameController(GameView gameView, int gameID, NumbleClient client) throws URISyntaxException, IOException, ParseException, InterruptedException {
+  public GameController(GameView gameView, int gameID, NumbleClient client) throws URISyntaxException,
+          IOException, ParseException, InterruptedException {
     this.gameView = gameView;
     this.gridController = gameView.getGridView();
     this.client = client;
@@ -73,7 +72,7 @@ public class GameController {
         if (gridIndex != client.getTargetLength(gameID)) {
           gridController.getGrid().get(row).get(gridIndex).setValue(value);
           userGuess.append(gridController.getGrid().get(row).get(gridIndex).getValue());
-          int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 31;
+          int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 32;
           int y = gridController.getGrid().get(row).get(gridIndex).getyPosition() + 15;
           drawValue(x, y, value);
           gridIndex++;
