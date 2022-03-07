@@ -54,6 +54,26 @@ public class GameView extends JPanel {
     layeredPane.add(gameGrid, 0);
     mainFrame.add(gameGrid);
     mainFrame.paintAll(mainFrame.getGraphics());
+    displayRules();
+  }
+
+  private void displayRules() {
+    switch (mode) {
+      case "EASY":
+        JOptionPane.showMessageDialog(mainFrame, "There are no constraints.");
+        break;
+      case "MEDIUM":
+        JOptionPane.showMessageDialog(mainFrame, "The resulting equation will not be displayed.");
+        break;
+      case "HARD":
+        JOptionPane.showMessageDialog(mainFrame, "Your guess must be equal to the target in order to be valid.");
+        break;
+      case "SUPERHARD":
+        String message = "Your guess must be equal to the target in order to be valid.\n" +
+                "The resulting equation will not be displayed";
+        JOptionPane.showMessageDialog(mainFrame, message);
+        break;
+    }
   }
 
   private void initializeButtons() {

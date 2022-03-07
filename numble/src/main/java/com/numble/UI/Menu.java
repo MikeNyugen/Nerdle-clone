@@ -100,25 +100,29 @@ public class Menu {
       NumbleClient client = new NumbleClient();
       int gameID = 0;
       String mode = modeMap.get(button.getText());
-      try {
-        gameID = client.createNewGame(mode);
-      } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
-        ex.printStackTrace();
-      }
-      GameView gameView = null;
-      try {
-        gameView = new GameView(gameID, client, mode);
-      } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
-        ex.printStackTrace();
-      }
-      try {
-        assert gameView != null;
-        GameController controller = new GameController(gameView, gameID, client, mode);
-      } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
-        ex.printStackTrace();
-      }
+      setupGame(gameID, mode, client);
     });
     menuFrame.add(button);
+  }
+
+  private void setupGame(int gameID, String mode, NumbleClient client) {
+    try {
+      gameID = client.createNewGame(mode);
+    } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
+      ex.printStackTrace();
+    }
+    GameView gameView = null;
+    try {
+      gameView = new GameView(gameID, client, mode);
+    } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
+      ex.printStackTrace();
+    }
+    try {
+      assert gameView != null;
+      GameController controller = new GameController(gameView, gameID, client, mode);
+    } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
+      ex.printStackTrace();
+    }
   }
 
 }
