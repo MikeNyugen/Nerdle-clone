@@ -35,20 +35,22 @@ public class GameView extends JPanel {
   JButton delete;
   JButton equals;
   JButton submit;
+  String mode;
 
   ArrayList<JButton> calculator = new ArrayList<>();
   JLayeredPane layeredPane;
   GridController gameGrid;
 
-  public GameView(int gameID, NumbleClient client) throws URISyntaxException, IOException, ParseException, InterruptedException {
+  public GameView(int gameID, NumbleClient client, String mode) throws URISyntaxException, IOException, ParseException, InterruptedException {
     try {
       UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     } catch (Exception e) {
       e.printStackTrace();
     }
+    this.mode = mode;
     setupFrame();
     initializeButtons();
-    gameGrid = new GridController(gameID, client);
+    gameGrid = new GridController(gameID, client, mode);
     layeredPane.add(gameGrid, 0);
     mainFrame.add(gameGrid);
     mainFrame.paintAll(mainFrame.getGraphics());
@@ -118,13 +120,17 @@ public class GameView extends JPanel {
     delete.setBounds(xPosition + SPACE * 4, yPosition + SPACE * 2, BUTTON_WIDTH, BUTTON_HEIGHT);
     setUpButton(delete);
 
-    equals = new JButton("=");
-    equals.setBounds(xPosition + SPACE * 4, yPosition + SPACE * 3, BUTTON_WIDTH, BUTTON_HEIGHT);
-    setUpButton(equals);
-
     submit = new JButton("Submit");
-    submit.setBounds(xPosition, yPosition + SPACE * 3, 335, BUTTON_HEIGHT);
-    setUpButton(submit);
+    equals = new JButton("=");
+    if (mode.equals("EASY") || mode.equals("HARD")) {
+      submit.setBounds(xPosition + SPACE/2, yPosition + SPACE * 3, 335, BUTTON_HEIGHT);
+      setUpButton(submit);
+    } else {
+      submit.setBounds(xPosition, yPosition + SPACE * 3, 335, BUTTON_HEIGHT);
+      setUpButton(submit);
+      equals.setBounds(xPosition + SPACE * 4, yPosition + SPACE * 3, BUTTON_WIDTH, BUTTON_HEIGHT);
+      setUpButton(equals);
+    }
   }
 
   public void setupFrame() {

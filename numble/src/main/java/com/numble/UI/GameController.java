@@ -27,12 +27,11 @@ public class GameController {
   private int gridIndex = 0;
   private int row = 0;
   private final int columns;
-  private int targetlength;
-  String mode;
+  private final int targetLength;
 
   GridController gridController;
 
-  public GameController(GameView gameView, int gameID, NumbleClient client) throws URISyntaxException,
+  public GameController(GameView gameView, int gameID, NumbleClient client, String mode) throws URISyntaxException,
           IOException, ParseException, InterruptedException {
     this.gameView = gameView;
     this.gridController = gameView.getGridView();
@@ -43,13 +42,10 @@ public class GameController {
     colourMapping = new Hashtable<>();
     userGuess = new StringBuilder();
     columns = gridController.getColumns();
-
-    mode = "MEDIUM";
+    targetLength = client.getTargetLength(gameID);
+    System.out.println(mode);
     if (mode.equals("EASY") || mode.equals("HARD")) {
-      targetlength = client.getTargetLength(gameID);
       drawResult();
-    } else {
-      targetlength = client.getTargetLength(gameID) - client.getTargetResult(gameID).length();
     }
     addListeners();
   }
@@ -76,7 +72,7 @@ public class GameController {
 
   private void addButtonListener(JButton button, String value) {
     button.addActionListener(e -> {
-      if (gridIndex != targetlength) {
+      if (gridIndex != targetLength) {
         gridController.getGrid().get(row).get(gridIndex).setValue(value);
         userGuess.append(gridController.getGrid().get(row).get(gridIndex).getValue());
         int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 32;
@@ -132,10 +128,8 @@ public class GameController {
 
   public void addSubmitListener() {
     gameView.getSubmit().addActionListener(e -> {
-      System.out.println("User Guess: " + userGuess.length());
-      System.out.println("Columns: " + columns);
       try {
-        if (userGuess.length() == targetlength) {
+        if (userGuess.length() == targetLength) {
           userGuessArr = userGuess.toString().split("");
           userGuessList = new ArrayList<>(Arrays.asList(userGuessArr));
           try {
@@ -146,7 +140,6 @@ public class GameController {
           colourGrid(colourCode, userGuessList);
           colourKeyboard(colourCode, userGuessList);
           reset();
-
           if (client.hasWon(gameID)) {
             winGame();
           }

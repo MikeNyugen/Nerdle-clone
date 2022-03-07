@@ -20,10 +20,14 @@ public class GridController extends JComponent {
   int xPosition;
   int yPosition;
 
-  public GridController(int gameID, NumbleClient client) throws URISyntaxException, IOException, ParseException, InterruptedException {
+  public GridController(int gameID, NumbleClient client, String mode) throws URISyntaxException,
+          IOException, ParseException, InterruptedException {
     this.grid = new ArrayList<>();
-    columns = client.getTargetLength(gameID) + client.getTargetResult(gameID).length(); // EASY MODE
-    //columns = client.getTargetLength(gameID); //MEDIUM MODE
+    if (mode.equals("EASY") || mode.equals("HARD")) {
+      columns = client.getTargetLength(gameID) + client.getTargetResult(gameID).length();
+    } else {
+      columns = client.getTargetLength(gameID);
+    }
     initializeGrid();
   }
 

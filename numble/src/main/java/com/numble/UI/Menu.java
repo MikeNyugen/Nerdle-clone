@@ -61,7 +61,7 @@ public class Menu {
     modeMap.put("Easy Mode", "EASY");
     modeMap.put("Medium Mode", "MEDIUM");
     modeMap.put("Hard Mode", "HARD");
-    modeMap.put("Super Hard mode", "SUPERHARD");
+    modeMap.put("Super Hard Mode", "SUPERHARD");
   }
 
   private void easyButton() {
@@ -107,13 +107,13 @@ public class Menu {
       }
       GameView gameView = null;
       try {
-        gameView = new GameView(gameID, client);
+        gameView = new GameView(gameID, client, mode);
       } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
         ex.printStackTrace();
       }
       try {
         assert gameView != null;
-        GameController controller = new GameController(gameView, gameID, client);
+        GameController controller = new GameController(gameView, gameID, client, mode);
       } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
         ex.printStackTrace();
       }
