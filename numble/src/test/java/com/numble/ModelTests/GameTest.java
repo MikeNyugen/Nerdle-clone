@@ -69,7 +69,7 @@ public class GameTest {
 
   @Test
   void doesItResultInCorrectSolutionTest() {
-    Game game = new Game("11+1", "13");
+    Game game = new Game("11+1", "=13");
     List<String> userGuess1 = Arrays.asList("1", "0", "+", "2");
     assertFalse(game.doesItResultInCorrectSolution(userGuess1));
     List<String> userGuess2 = Arrays.asList("1", "0", "+", "3");
@@ -78,7 +78,7 @@ public class GameTest {
 
   @Test
   void testHardMode() {
-    Game game = new Game("11+1", "12", "HARD");
+    Game game = new Game("11+1", "=12", "HARD");
     List<String> guess = Arrays.asList("1", "1", "+", "2");
     var ret = game.checkGuess(guess);
     for (var v : ret) {
@@ -93,7 +93,7 @@ public class GameTest {
 
   @Test
   void testMediumMode() {
-    Game game = new Game("11+1", "12", "MEDIUM");
+    Game game = new Game("11+1", "=12", "MEDIUM");
     List<String> guess = Arrays.asList("1", "1", "+", "2");
     var ret = game.checkGuess(guess);
     assertFalse(game.hasWon());
@@ -104,7 +104,7 @@ public class GameTest {
 
   @Test
   void testSuperHardMode() {
-    Game game = new Game("11+1", "12", "SUPERHARD");
+    Game game = new Game("11+1", "=12", "SUPERHARD");
     List<String> guess = Arrays.asList("1", "1", "+", "2", "=", "1", "2");
     var ret = game.checkGuess(guess);
     for (var v : ret) {

@@ -213,7 +213,7 @@ public class Game implements GameInterface {
    * adds equals sing onto part which the user must guess
    */
   public void addEqualsOntoTarget() {
-    target = target + "=" + targetResult;
+    target = target + targetResult;
   }
 
   /**
