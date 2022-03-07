@@ -129,4 +129,17 @@ public class NumbleClient {
             throw makeException(json);
         }
     }
+
+    public String gameMode(Integer game_id) throws URISyntaxException, IOException, InterruptedException, ParseException {
+        HttpRequest request = HttpRequest.newBuilder(new URI(endpoint + "game_mode/" + game_id.toString())).
+                GET().build();
+        var response = httpclient.send(request, HttpResponse.BodyHandlers.ofString());
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(response.body());
+        if (response.statusCode() == 200) {
+            return json.get("game_mode").toString();
+        } else {
+            throw makeException(json);
+        }
+    }
 }
