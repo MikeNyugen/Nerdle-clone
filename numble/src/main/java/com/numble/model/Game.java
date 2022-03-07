@@ -16,6 +16,11 @@ public class Game implements GameInterface {
   private final ArrayList<String> remainingCharList;
   private ArrayList<Colour> colourCode;
   private int guessesRemaining = 5;
+
+  public Mode getGameMode() {
+    return gameMode;
+  }
+
   private Mode gameMode;
 
   /**
