@@ -1,6 +1,7 @@
 package com.numble;
 
 import com.numble.model.Colour;
+import com.numble.model.Mode;
 import java.util.List;
 
 public interface GameInterface {
