@@ -75,7 +75,7 @@ public class Game implements GameInterface {
     if ((gameMode.equals(Mode.HARD)) || (gameMode.equals(Mode.SUPERHARD))) {
       if (!doesItResultInCorrectSolution(userGuessArray)) {
         for (int i = 0; i < userGuessArray.size(); i++) {
-          colourCode.set(i, Colour.PURPLE);
+          colourCode.set(i, Colour.GREY);
         }
       }
     }

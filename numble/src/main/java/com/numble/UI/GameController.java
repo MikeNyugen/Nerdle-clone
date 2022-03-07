@@ -27,6 +27,8 @@ public class GameController {
   private int gridIndex = 0;
   private int row = 0;
   private final int columns;
+  private int targetlength;
+  String mode;
 
   GridController gridController;
 
@@ -41,7 +43,14 @@ public class GameController {
     colourMapping = new Hashtable<>();
     userGuess = new StringBuilder();
     columns = gridController.getColumns();
-    drawResult();
+
+    mode = "MEDIUM";
+    if (mode.equals("EASY") || mode.equals("HARD")) {
+      targetlength = client.getTargetLength(gameID);
+      drawResult();
+    } else {
+      targetlength = client.getTargetLength(gameID) - client.getTargetResult(gameID).length();
+    }
     addListeners();
   }
 
@@ -67,17 +76,13 @@ public class GameController {
 
   private void addButtonListener(JButton button, String value) {
     button.addActionListener(e -> {
-      try {
-        if (gridIndex != client.getTargetLength(gameID)) {
-          gridController.getGrid().get(row).get(gridIndex).setValue(value);
-          userGuess.append(gridController.getGrid().get(row).get(gridIndex).getValue());
-          int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 32;
-          int y = gridController.getGrid().get(row).get(gridIndex).getyPosition() + 15;
-          drawValue(x, y, value);
-          gridIndex++;
-        }
-      } catch (URISyntaxException | IOException | InterruptedException | ParseException ex) {
-        ex.printStackTrace();
+      if (gridIndex != targetlength) {
+        gridController.getGrid().get(row).get(gridIndex).setValue(value);
+        userGuess.append(gridController.getGrid().get(row).get(gridIndex).getValue());
+        int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 32;
+        int y = gridController.getGrid().get(row).get(gridIndex).getyPosition() + 15;
+        drawValue(x, y, value);
+        gridIndex++;
       }
     });
   }
@@ -127,8 +132,10 @@ public class GameController {
 
   public void addSubmitListener() {
     gameView.getSubmit().addActionListener(e -> {
+      System.out.println("User Guess: " + userGuess.length());
+      System.out.println("Columns: " + columns);
       try {
-        if (userGuess.length() == client.getTargetLength(gameID)) {
+        if (userGuess.length() == targetlength) {
           userGuessArr = userGuess.toString().split("");
           userGuessList = new ArrayList<>(Arrays.asList(userGuessArr));
           try {

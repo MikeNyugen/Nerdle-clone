@@ -58,10 +58,10 @@ public class Menu {
   }
 
   private void setupModeMap() {
-    modeMap.put("Easy mode", "EASY");
-    modeMap.put("Medium mode", "MEDIUM");
-    modeMap.put("Hard mode", "HARD");
-    modeMap.put("Super hard mode", "SUPERHARD");
+    modeMap.put("Easy Mode", "EASY");
+    modeMap.put("Medium Mode", "MEDIUM");
+    modeMap.put("Hard Mode", "HARD");
+    modeMap.put("Super Hard mode", "SUPERHARD");
   }
 
   private void easyButton() {
