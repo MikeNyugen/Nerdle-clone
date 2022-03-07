@@ -192,11 +192,17 @@ public class Game implements GameInterface {
     }
     var guessResult = Evaluator.evaluate(String.valueOf(guess));
     if (gameMode == Mode.EASY || gameMode == Mode.HARD) {
-      return Integer.valueOf(targetResult).equals(guessResult);
+      if (targetResult.charAt(0) == '=') {
+        return Integer.valueOf(targetResult.substring(1)).equals(guessResult);
+      } else {
+        return Integer.valueOf(targetResult).equals(guessResult);
+      }
     } else {
       StringBuilder userResult = new StringBuilder();
       for (i = i + 1; i < userGuessArray.size(); i++) {
-        userResult.append(userGuessArray.get(i));
+        if (!userGuessArray.get(i).equals("=")) {
+          userResult.append(userGuessArray.get(i));
+        }
       }
       return Integer.valueOf(userResult.toString()).equals(guessResult);
     }
