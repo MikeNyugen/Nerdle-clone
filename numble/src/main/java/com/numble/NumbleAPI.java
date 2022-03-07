@@ -85,6 +85,19 @@ public class NumbleAPI {
         }
     }
 
+    @GetMapping("/game_mode/{id}")
+    public ObjectNode gameMode(@PathVariable int id) {
+        if (id < nextGameID) {
+            ObjectMapper mapper = new ObjectMapper();
+            var result = mapper.createObjectNode();
+            result.put("status", "OK");
+            result.put("mode", games.get(id).getGameMode().toString());
+            return result;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "invalid game id");
+        }
+    }
+
     @PostMapping("/check_guess/{id}")
     public ObjectNode checkGuess(@PathVariable int id, @RequestParam String guess) {
         if (id < nextGameID) {
