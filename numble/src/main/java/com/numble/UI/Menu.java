@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Hashtable;
 
 /**
  * The start menu for the game.
@@ -16,6 +17,7 @@ public class Menu {
 
   private final static int FRAME_WIDTH = 500;
   private final static int FRAME_HEIGHT = 450;
+  private final Hashtable<String, String> modeMap = new Hashtable<>();
 
   JFrame menuFrame;
 
@@ -27,6 +29,7 @@ public class Menu {
     }
     setupFrame();
     displayTitle();
+    setupModeMap();
     easyButton();
     mediumButton();
     hardButton();
@@ -52,6 +55,13 @@ public class Menu {
     title.setFont(new Font("Comic Sans MS", Font.BOLD, 65));
     title.setForeground(new Color(255,215,0));
     menuFrame.add(title);
+  }
+
+  private void setupModeMap() {
+    modeMap.put("Easy mode", "EASY");
+    modeMap.put("Medium mode", "MEDIUM");
+    modeMap.put("Hard mode", "HARD");
+    modeMap.put("Super hard mode", "SUPERHARD");
   }
 
   private void easyButton() {
@@ -89,8 +99,9 @@ public class Menu {
       menuFrame.setVisible(false);
       NumbleClient client = new NumbleClient();
       int gameID = 0;
+      String mode = modeMap.get(button.getText());
       try {
-        gameID = client.createNewGame();
+        gameID = client.createNewGame(mode);
       } catch (URISyntaxException | IOException | ParseException | InterruptedException ex) {
         ex.printStackTrace();
       }

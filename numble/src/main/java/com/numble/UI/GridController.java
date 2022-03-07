@@ -22,7 +22,8 @@ public class GridController extends JComponent {
 
   public GridController(int gameID, NumbleClient client) throws URISyntaxException, IOException, ParseException, InterruptedException {
     this.grid = new ArrayList<>();
-    columns = client.getTargetResult(gameID).length() + client.getTargetLength(gameID);
+    columns = client.getTargetLength(gameID) + client.getTargetResult(gameID).length(); // EASY MODE
+   // columns = client.getTargetLength(gameID); MEDIUM MODE
     initializeGrid();
   }
 
@@ -87,6 +88,10 @@ public class GridController extends JComponent {
 
   public ArrayList<ArrayList<Cell>> getGrid() {
     return grid;
+  }
+
+  public int getColumns() {
+    return columns;
   }
 }
 

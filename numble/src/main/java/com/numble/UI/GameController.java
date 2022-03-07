@@ -40,8 +40,7 @@ public class GameController {
     values = new ArrayList<>();
     colourMapping = new Hashtable<>();
     userGuess = new StringBuilder();
-    columns = client.getTargetResult(gameID).length() + client.getTargetLength(gameID);
-
+    columns = gridController.getColumns();
     drawResult();
     addListeners();
   }
