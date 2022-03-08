@@ -10,6 +10,7 @@ There are also appropriate test classes within the test folder.
 The game can be run from the command line using the gradle bootRun command.
 
 The game has four different modes:
+
 Easy: The result of the equation is displayed to the user. The user's guess does not need to be a valid equation.
 
 Medium: The result of the equation is not displayed to the user. The user's guess does not need to be a valid equation.
