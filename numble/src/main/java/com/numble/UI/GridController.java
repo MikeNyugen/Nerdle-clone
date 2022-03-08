@@ -20,9 +20,14 @@ public class GridController extends JComponent {
   int xPosition;
   int yPosition;
 
-  public GridController(int gameID, NumbleClient client) throws URISyntaxException, IOException, ParseException, InterruptedException {
+  public GridController(int gameID, NumbleClient client, String mode) throws URISyntaxException,
+          IOException, ParseException, InterruptedException {
     this.grid = new ArrayList<>();
-    columns = client.getTargetResult(gameID).length() + client.getTargetLength(gameID);
+    if (mode.equals("EASY") || mode.equals("HARD")) {
+      columns = client.getTargetLength(gameID) + client.getTargetResult(gameID).length();
+    } else {
+      columns = client.getTargetLength(gameID);
+    }
     initializeGrid();
   }
 
@@ -49,8 +54,10 @@ public class GridController extends JComponent {
           g2d.setColor(new Color(0, 163, 108));
         } else if (cell.getColour() == Colour.GREY) {
           g2d.setColor(Color.lightGray);
-        } else {
+        } else if(cell.getColour() == Colour.WHITE){
           g2d.setColor(Color.white);
+        } else if (cell.getColour() == Colour.PURPLE) {
+          g2d.setColor(new Color(128,0,128));
         }
         g2d.fillRoundRect(cell.getxPosition(), cell.getyPosition(),
                 80, 80, 10, 10);
@@ -87,6 +94,10 @@ public class GridController extends JComponent {
 
   public ArrayList<ArrayList<Cell>> getGrid() {
     return grid;
+  }
+
+  public int getColumns() {
+    return columns;
   }
 }
 

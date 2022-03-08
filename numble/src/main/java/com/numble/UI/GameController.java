@@ -1,9 +1,7 @@
 package com.numble.UI;
 
 import com.numble.NumbleClient;
-import com.numble.model.Cell;
 import com.numble.model.Colour;
-import com.numble.model.Game;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
@@ -29,10 +27,12 @@ public class GameController {
   private int gridIndex = 0;
   private int row = 0;
   private final int columns;
+  private final int targetLength;
 
   GridController gridController;
 
-  public GameController(GameView gameView, int gameID, NumbleClient client) throws URISyntaxException, IOException, ParseException, InterruptedException {
+  public GameController(GameView gameView, int gameID, NumbleClient client, String mode) throws URISyntaxException,
+          IOException, ParseException, InterruptedException {
     this.gameView = gameView;
     this.gridController = gameView.getGridView();
     this.client = client;
@@ -41,9 +41,12 @@ public class GameController {
     values = new ArrayList<>();
     colourMapping = new Hashtable<>();
     userGuess = new StringBuilder();
-    columns = client.getTargetResult(gameID).length() + client.getTargetLength(gameID);
-
-    drawResult();
+    columns = gridController.getColumns();
+    targetLength = client.getTargetLength(gameID);
+    System.out.println(mode);
+    if (mode.equals("EASY") || mode.equals("HARD")) {
+      drawResult();
+    }
     addListeners();
   }
 
@@ -69,17 +72,13 @@ public class GameController {
 
   private void addButtonListener(JButton button, String value) {
     button.addActionListener(e -> {
-      try {
-        if (gridIndex != client.getTargetLength(gameID)) {
-          gridController.getGrid().get(row).get(gridIndex).setValue(value);
-          userGuess.append(gridController.getGrid().get(row).get(gridIndex).getValue());
-          int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 31;
-          int y = gridController.getGrid().get(row).get(gridIndex).getyPosition() + 15;
-          drawValue(x, y, value);
-          gridIndex++;
-        }
-      } catch (URISyntaxException | IOException | InterruptedException | ParseException ex) {
-        ex.printStackTrace();
+      if (gridIndex != targetLength) {
+        gridController.getGrid().get(row).get(gridIndex).setValue(value);
+        userGuess.append(gridController.getGrid().get(row).get(gridIndex).getValue());
+        int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 32;
+        int y = gridController.getGrid().get(row).get(gridIndex).getyPosition() + 15;
+        drawValue(x, y, value);
+        gridIndex++;
       }
     });
   }
@@ -130,7 +129,7 @@ public class GameController {
   public void addSubmitListener() {
     gameView.getSubmit().addActionListener(e -> {
       try {
-        if (userGuess.length() == client.getTargetLength(gameID)) {
+        if (userGuess.length() == targetLength) {
           userGuessArr = userGuess.toString().split("");
           userGuessList = new ArrayList<>(Arrays.asList(userGuessArr));
           try {
@@ -141,7 +140,6 @@ public class GameController {
           colourGrid(colourCode, userGuessList);
           colourKeyboard(colourCode, userGuessList);
           reset();
-
           if (client.hasWon(gameID)) {
             winGame();
           }
@@ -169,6 +167,8 @@ public class GameController {
       } else if (colours.get(i) == Colour.ORANGE) {
         color = new Color(251, 177, 23);
         temp.put(colours.get(i), color);
+      } else if (colours.get(i) == Colour.PURPLE) {
+        temp.put(colours.get(i), Color.white);
       }
       colourMapping.put(userGuessList.get(i), temp);
     }
@@ -194,7 +194,7 @@ public class GameController {
   }
 
   private void winGame() {
-    JOptionPane.showMessageDialog(gameView.mainFrame, "Well done! You've guessed the equation.");
+    JOptionPane.showMessageDialog(gameView.mainFrame, "Well done! You've guessed the equation :)");
     gameView.mainFrame.repaint();
     for (JButton button : calculator) {
       button.setEnabled(false);

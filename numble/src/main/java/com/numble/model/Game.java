@@ -2,10 +2,13 @@ package com.numble.model;
 
 import com.numble.GameInterface;
 import com.numble.evaluator.Evaluator;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Model of the game class
@@ -16,6 +19,12 @@ public class Game implements GameInterface {
   private final ArrayList<String> remainingCharList;
   private ArrayList<Colour> colourCode;
   private int guessesRemaining = 5;
+  private StringBuilder secondHalf;
+
+  public Mode getGameMode() {
+    return gameMode;
+  }
+
   private Mode gameMode;
 
   /**
@@ -62,7 +71,7 @@ public class Game implements GameInterface {
    * @return an array list of colours which represent the "success" of each character guess
    */
   @Override
-  public ArrayList<Colour> checkGuess(ArrayList<String> userGuessArray) {
+  public List<Colour> checkGuess(List<String> userGuessArray) {
     String[] targetArray = target.split("");
     ArrayList<String> targetList = new ArrayList<>(Arrays.asList(targetArray));
     colourCode = new ArrayList<>();
@@ -72,7 +81,7 @@ public class Game implements GameInterface {
     setOrangeTiles(userGuessArray, targetList);
 
     if ((gameMode.equals(Mode.HARD)) || (gameMode.equals(Mode.SUPERHARD))) {
-      if (!doesItResultInCorrectSolution(userGuessArray)) {
+      if (!checkEquation(userGuessArray)) {
         for (int i = 0; i < userGuessArray.size(); i++) {
           colourCode.set(i, Colour.PURPLE);
         }
@@ -87,7 +96,7 @@ public class Game implements GameInterface {
    *
    * @param targetList list of characters the user must guess
    */
-  void initializeColours(ArrayList<String> targetList) {
+  void initializeColours(List<String> targetList) {
     for (int i = 0; i < targetList.size(); i++) {
       colourCode.add(Colour.GREY);
     }
@@ -99,7 +108,7 @@ public class Game implements GameInterface {
    * @param userGuessArray array list of the users guess
    * @param targetList     array list which the user must guess
    */
-  void setGreenTiles(ArrayList<String> userGuessArray, ArrayList<String> targetList) {
+  void setGreenTiles(List<String> userGuessArray, List<String> targetList) {
     for (int i = 0; i < userGuessArray.size(); i++) {
       String number = userGuessArray.get(i);
       String targetNumber = targetList.get(i);
@@ -118,7 +127,7 @@ public class Game implements GameInterface {
    * @param userGuessArray array list of the users guess
    * @param targetList     array list which the user must guess
    */
-  void setOrangeTiles(ArrayList<String> userGuessArray, ArrayList<String> targetList) {
+  void setOrangeTiles(List<String> userGuessArray, List<String> targetList) {
     for (int i = 0; i < userGuessArray.size(); i++) {
       String number = userGuessArray.get(i);
       boolean correct = colourCode.get(i).equals(Colour.GREEN);
@@ -174,39 +183,68 @@ public class Game implements GameInterface {
     return targetResult;
   }
 
-  /**
-   * checks if the users guess results in the result they are guessing for
-   *
-   * @param userGuessArray array of the users guess
-   * @return true if the equation the user has guessed results in the desired solution
-   */
-  public boolean doesItResultInCorrectSolution(ArrayList<String> userGuessArray) {
-    StringBuilder guess = new StringBuilder();
-    int i;
-    for (i = 0; i < userGuessArray.size(); i++) {
-      var s = userGuessArray.get(i);
-      if (s.equals("=")) {
-        break;
+  public boolean checkEquation(List<String> userGuessArray){
+    StringBuilder userGuess = new StringBuilder();
+    StringBuilder firstHalf = new StringBuilder();
+    secondHalf = new StringBuilder();
+    int nonDigits = 0;
+    int equals = 0;
+    if (gameMode == Mode.HARD) {
+      for (String s : userGuessArray) {
+        if (Character.isDigit(s.charAt(0))) {
+          userGuess.append(s);
+        } else {
+          userGuess.append(s);
+          nonDigits++;
+        }
       }
-      guess.append(s);
-    }
-    var guessResult = Evaluator.evaluate(String.valueOf(guess));
-    if (gameMode == Mode.EASY || gameMode == Mode.HARD) {
-      return Integer.valueOf(targetResult).equals(guessResult);
-    } else {
-      StringBuilder userResult = new StringBuilder();
-      for (i = i + 1; i < userGuessArray.size(); i++) {
-        userResult.append(userGuessArray.get(i));
+      return nonDigits == 1 && Character.isDigit(userGuess.charAt(0)) && Character.isDigit(userGuess.charAt(userGuess.toString().length() - 1))
+              && checkCorrect(userGuess.toString(), targetResult);
+    } else if (gameMode == Mode.SUPERHARD) {
+      boolean onSecondHalf = false;
+      for (String s : userGuessArray) {
+        if (s.charAt(0) == '=' && equals == 0) {
+          onSecondHalf = true;
+          equals++;
+          secondHalf.append(s);
+        } else if (Character.isDigit(s.charAt(0)) && !onSecondHalf) {
+          firstHalf.append(s);
+        } else if (Character.isDigit(s.charAt(0)) && onSecondHalf) {
+          secondHalf.append(s);
+        } else {
+          if (equals == 1) {
+            secondHalf.append(s);
+          } else {
+            firstHalf.append(s);
+          }
+          nonDigits++;
+        }
       }
-      return Integer.valueOf(userResult.toString()).equals(guessResult);
     }
+    return nonDigits == 1 && equals == 1 && Character.isDigit(firstHalf.charAt(0)) && Character.isDigit(secondHalf.charAt(secondHalf.toString().length() - 1))
+            && checkCorrect(firstHalf.toString(), targetResult);
+  }
+
+  public boolean checkCorrect(String guess, String result) {
+    ExpressionParser parser = new SpelExpressionParser();
+    StringBuilder equation = new StringBuilder();
+    String userGuess = guess;
+    if (guess.contains("x")) {
+      userGuess = userGuess.replace("x", "*");
+    }
+    for (Character c : userGuess.toCharArray()) {
+      equation.append(c);
+    }
+    int guessResult = 0;
+    guessResult = Evaluator.evaluate(equation.toString());
+    return String.valueOf(guessResult).equals(result.substring(1));
   }
 
   /**
-   * adds equals sing onto part which the user must guess
+   * adds equals sign onto part which the user must guess
    */
   public void addEqualsOntoTarget() {
-    target = target + "=" + targetResult;
+    target = target + targetResult;
   }
 
   /**

@@ -8,7 +8,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 public class APITests {
     WebTestClient client;
 
-    String[] getMethods = new String[]{"get_target_result", "get_target", "has_won", "target_length", "has_lost"};
+    String[] getMethods = new String[]{"get_target_result", "get_target", "has_won", "target_length", "has_lost", "game_mode"};
     @BeforeEach
     public void before() {
         client = WebTestClient.bindToController(new NumbleAPI()).build();
