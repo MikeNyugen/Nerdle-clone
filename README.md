@@ -11,8 +11,11 @@ The game can be run from the command line using the gradle bootRun command.
 
 The game has four different modes:
 Easy: The result of the equation is displayed to the user. The user's guess does not need to be a valid equation.
+
 Medium: The result of the equation is not displayed to the user. The user's guess does not need to be a valid equation.
+
 Hard: The result of the equation is displayed to the user. The user's guess needs to be valid and be equal to the target result.
+
 Super_hard: The result of the equation is not displayed to the user. The user's guess needs to be valid and be equal to the target result.
 
 API Description:
