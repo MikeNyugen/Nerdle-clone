@@ -17,6 +17,7 @@ public class Game implements GameInterface {
   private final ArrayList<String> remainingCharList;
   private ArrayList<Colour> colourCode;
   private int guessesRemaining = 5;
+  private StringBuilder result;
 
   public Mode getGameMode() {
     return gameMode;
@@ -183,7 +184,7 @@ public class Game implements GameInterface {
   public boolean checkEquation(List<String> userGuessArray){
     StringBuilder guess = new StringBuilder();
     StringBuilder first = new StringBuilder();
-    StringBuilder result = new StringBuilder();
+    result = new StringBuilder();
     int nonDigits = 0;
     int equals = 0;
     if (gameMode == Mode.HARD) {
@@ -220,8 +221,18 @@ public class Game implements GameInterface {
     return nonDigits == 1 && equals == 1 && Character.isDigit(first.charAt(0)) && Character.isDigit(result.charAt(result.toString().length() - 1));
   }
 
+  public boolean checkResultsEqual(StringBuilder result) {
+    String resultOnly;
+    if (targetResult.startsWith("=")) {
+      resultOnly = targetResult.substring(1);
+    } else {
+      resultOnly = targetResult;
+    }
+    return resultOnly.equals(result.toString());
+  }
+
   /**
-   * adds equals sing onto part which the user must guess
+   * adds equals sign onto part which the user must guess
    */
   public void addEqualsOntoTarget() {
     target = target + targetResult;

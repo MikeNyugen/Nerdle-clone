@@ -68,12 +68,14 @@ public class GameTest {
   }
 
   @Test
-  void doesItResultInCorrectSolutionTest() {
-    Game game = new Game("11+1", "=13");
-    List<String> userGuess1 = Arrays.asList("1", "0", "+", "2");
-    assertFalse(game.doesItResultInCorrectSolution(userGuess1));
-    List<String> userGuess2 = Arrays.asList("1", "0", "+", "3");
-    assertTrue(game.doesItResultInCorrectSolution(userGuess2));
+  void checkResultsEqualTest() {
+    Game game = new Game("11+1", "13");
+    StringBuilder userResult1 = new StringBuilder();
+    userResult1.append("12");
+    assertFalse(game.checkResultsEqual(userResult1));
+    StringBuilder userResult2 = new StringBuilder();
+    userResult2.append("13");
+    assertTrue(game.checkResultsEqual(userResult2));
   }
 
   @Test
