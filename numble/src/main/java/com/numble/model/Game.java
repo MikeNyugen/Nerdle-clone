@@ -78,7 +78,7 @@ public class Game implements GameInterface {
     setOrangeTiles(userGuessArray, targetList);
 
     if ((gameMode.equals(Mode.HARD)) || (gameMode.equals(Mode.SUPERHARD))) {
-      if (!doesItResultInCorrectSolution(userGuessArray)) {
+      if (!checkEquation(userGuessArray)) {
         for (int i = 0; i < userGuessArray.size(); i++) {
           colourCode.set(i, Colour.PURPLE);
         }
@@ -180,38 +180,44 @@ public class Game implements GameInterface {
     return targetResult;
   }
 
-  /**
-   * checks if the users guess results in the result they are guessing for
-   *
-   * @param userGuessArray array of the users guess
-   * @return true if the equation the user has guessed results in the desired solution
-   */
-  public boolean doesItResultInCorrectSolution(List<String> userGuessArray) {
+  public boolean checkEquation(List<String> userGuessArray){
     StringBuilder guess = new StringBuilder();
-    int i;
-    for (i = 0; i < userGuessArray.size(); i++) {
-      var s = userGuessArray.get(i);
-      if (s.equals("=")) {
-        break;
-      }
-      guess.append(s);
-    }
-    var guessResult = Evaluator.evaluate(String.valueOf(guess));
-    if (gameMode == Mode.EASY || gameMode == Mode.HARD) {
-      if (targetResult.charAt(0) == '=') {
-        return Integer.valueOf(targetResult.substring(1)).equals(guessResult);
-      } else {
-        return Integer.valueOf(targetResult).equals(guessResult);
-      }
-    } else {
-      StringBuilder userResult = new StringBuilder();
-      for (i = i + 1; i < userGuessArray.size(); i++) {
-        if (!userGuessArray.get(i).equals("=")) {
-          userResult.append(userGuessArray.get(i));
+    StringBuilder first = new StringBuilder();
+    StringBuilder result = new StringBuilder();
+    int nonDigits = 0;
+    int equals = 0;
+    if (gameMode == Mode.HARD) {
+      for (String s : userGuessArray) {
+        if (Character.isDigit(s.charAt(0))) {
+          guess.append(s);
+        } else {
+          guess.append(s);
+          nonDigits++;
         }
       }
-      return Integer.valueOf(userResult.toString()).equals(guessResult);
+      return nonDigits == 1 && Character.isDigit(guess.charAt(0)) && Character.isDigit(guess.charAt(guess.toString().length() - 1));
+    } else if (gameMode == Mode.SUPERHARD) {
+      boolean onResult = false;
+      for (String s : userGuessArray) {
+        if (s.charAt(0) == '=' && equals == 0) {
+          onResult = true;
+          equals++;
+          result.append(s);
+        } else if (Character.isDigit(s.charAt(0)) && !onResult) {
+          first.append(s);
+        } else if (Character.isDigit(s.charAt(0)) && onResult) {
+          result.append(s);
+        } else {
+          if (equals == 1) {
+            result.append(s);
+          } else {
+            first.append(s);
+          }
+          nonDigits++;
+        }
+      }
     }
+    return nonDigits == 1 && equals == 1 && Character.isDigit(first.charAt(0)) && Character.isDigit(result.charAt(result.toString().length() - 1));
   }
 
   /**
