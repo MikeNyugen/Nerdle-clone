@@ -20,6 +20,7 @@ Hard: The result of the equation is displayed to the user. The user's guess need
 Super_hard: The result of the equation is not displayed to the user. The user's guess needs to be valid and be equal to the target result.
 
 API Description:
+
 POST method /new_game
 arguments: mode, which is one of EASY, MEDIUM, HARD, SUPERHARD
 this method created a new game and returns its id as an integer
