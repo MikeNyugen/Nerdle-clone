@@ -2,15 +2,19 @@ package com.numble.ModelTests;
 
 import com.numble.model.Colour;
 import com.numble.model.Game;
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+/**
+ * Tests the model for the game.
+ */
 public class GameTest {
-
   @Test
   void checkGuessTest() {
     Game game = new Game("12+6", "=18");
@@ -25,7 +29,8 @@ public class GameTest {
     Game game = new Game("4321+11", "=4332");
     assertEquals("4321+11", game.getTarget());
     List<String> userGuess = Arrays.asList("1", "1", "1", "1", "+", "2", "2");
-    List<Colour> expected = Arrays.asList(Colour.ORANGE,Colour.ORANGE , Colour.GREY, Colour.GREEN, Colour.GREEN, Colour.ORANGE, Colour.GREY);
+    List<Colour> expected = Arrays.asList(Colour.ORANGE, Colour.ORANGE, Colour.GREY,
+            Colour.GREEN, Colour.GREEN, Colour.ORANGE, Colour.GREY);
     List<Colour> actual = game.checkGuess(userGuess);
 
     assertEquals(expected, actual);
@@ -116,7 +121,7 @@ public class GameTest {
 
   @Test
   void testModes() {
-    for (var mode : new String[] {"EASY", "MEDIUM", "HARD", "SUPERHARD"}) {
+    for (var mode : new String[]{"EASY", "MEDIUM", "HARD", "SUPERHARD"}) {
       var game = new Game(mode);
       game.checkGuess(List.of(game.getTarget().split("")));
     }
