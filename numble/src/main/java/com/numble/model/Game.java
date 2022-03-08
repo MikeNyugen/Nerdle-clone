@@ -1,7 +1,10 @@
 package com.numble.model;
 
+import ch.qos.logback.core.joran.spi.Interpreter;
 import com.numble.GameInterface;
 import com.numble.evaluator.Evaluator;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -196,7 +199,8 @@ public class Game implements GameInterface {
           nonDigits++;
         }
       }
-      return nonDigits == 1 && Character.isDigit(guess.charAt(0)) && Character.isDigit(guess.charAt(guess.toString().length() - 1));
+      return nonDigits == 1 && Character.isDigit(guess.charAt(0)) && Character.isDigit(guess.charAt(guess.toString().length() - 1))
+              && checkCorrect(guess.toString(), targetResult.substring(1));
     } else if (gameMode == Mode.SUPERHARD) {
       boolean onResult = false;
       for (String s : userGuessArray) {
@@ -218,17 +222,23 @@ public class Game implements GameInterface {
         }
       }
     }
-    return nonDigits == 1 && equals == 1 && Character.isDigit(first.charAt(0)) && Character.isDigit(result.charAt(result.toString().length() - 1));
+    return nonDigits == 1 && equals == 1 && Character.isDigit(first.charAt(0)) && Character.isDigit(result.charAt(result.toString().length() - 1))
+            && checkCorrect(first.toString(), targetResult.substring(1));
   }
 
-  public boolean checkResultsEqual(StringBuilder result) {
-    String resultOnly;
-    if (targetResult.startsWith("=")) {
-      resultOnly = targetResult.substring(1);
-    } else {
-      resultOnly = targetResult;
+  public boolean checkCorrect(String guess, String result) {
+    ExpressionParser parser = new SpelExpressionParser();
+    StringBuilder equation = new StringBuilder();
+    String userGuess = guess;
+    if (guess.contains("x")) {
+      userGuess = userGuess.replace("x", "*");
     }
-    return resultOnly.equals(result.toString());
+    for (Character c : userGuess.toCharArray()) {
+      equation.append(c);
+    }
+    int guessResult = 0;
+    guessResult = parser.parseExpression(equation.toString()).getValue(Integer.class);
+    return String.valueOf(guessResult).equals(result);
   }
 
   /**
