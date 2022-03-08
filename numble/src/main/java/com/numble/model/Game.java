@@ -236,7 +236,6 @@ public class Game implements GameInterface {
       equation.append(c);
     }
     int guessResult = 0;
-   // guessResult = parser.parseExpression(equation.toString()).getValue(Integer.class);
     guessResult = Evaluator.evaluate(equation.toString());
     return String.valueOf(guessResult).equals(result);
   }
