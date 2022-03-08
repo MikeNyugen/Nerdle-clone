@@ -68,17 +68,6 @@ public class GameTest {
   }
 
   @Test
-  void checkResultsEqualTest() {
-    Game game = new Game("11+1", "13");
-    StringBuilder userResult1 = new StringBuilder();
-    userResult1.append("12");
-    assertFalse(game.checkResultsEqual(userResult1));
-    StringBuilder userResult2 = new StringBuilder();
-    userResult2.append("13");
-    assertTrue(game.checkResultsEqual(userResult2));
-  }
-
-  @Test
   void testHardMode() {
     Game game = new Game("11+1", "=12", "HARD");
     List<String> guess = Arrays.asList("1", "1", "+", "2");
