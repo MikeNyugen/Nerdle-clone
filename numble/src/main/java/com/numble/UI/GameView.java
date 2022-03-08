@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+/**
+ * Responsible for the view of the game.
+ */
 public class GameView extends JPanel {
   private final static int FRAME_WIDTH = 1000;
   private final static int FRAME_HEIGHT = 1000;
@@ -57,6 +60,9 @@ public class GameView extends JPanel {
     displayRules();
   }
 
+  /**
+   * Displays the rules of the mode chosen via a pop-up.
+   */
   private void displayRules() {
     switch (mode) {
       case "EASY":
@@ -79,6 +85,9 @@ public class GameView extends JPanel {
     }
   }
 
+  /**
+   * Initialises the buttons and adds it to the view.
+   */
   private void initializeButtons() {
     int xPosition = 287;
     int yPosition = 540;
@@ -156,6 +165,9 @@ public class GameView extends JPanel {
     }
   }
 
+  /**
+   * Sets up the main frame.
+   */
   public void setupFrame() {
     mainFrame = new JFrame("Numble");
     layeredPane = new JLayeredPane();
@@ -171,6 +183,10 @@ public class GameView extends JPanel {
     mainFrame.setVisible(true);
   }
 
+  /**
+   * Sets up a button.
+   * @param button  the button to be set up
+   */
   public void setUpButton(JButton button) {
     button.setBackground(new Color(251,251,249));
     button.setForeground(Color.black);
@@ -181,6 +197,11 @@ public class GameView extends JPanel {
     mainFrame.add(button);
   }
 
+  /**
+   * Sets the colour of a button
+   * @param button  the button to be coloured
+   * @param color  the colour of the button
+   */
   public void setColor(JButton button, Color color) {
     button.setBackground(color);
     button.setBorder(new LineBorder(color));

@@ -37,6 +37,9 @@ public class Menu {
     menuFrame.paintAll(menuFrame.getGraphics());
   }
 
+  /**
+   * Sets up the menu frame.
+   */
   private void setupFrame() {
     menuFrame = new JFrame("Numble");
     menuFrame.setLayout(null);
@@ -49,6 +52,9 @@ public class Menu {
     menuFrame.setVisible(true);
   }
 
+  /**
+   * Displays the title of the game
+   */
   private void displayTitle() {
     JLabel title = new JLabel("Numble");
     title.setBounds(140, 15, 300, 100);
@@ -57,6 +63,10 @@ public class Menu {
     menuFrame.add(title);
   }
 
+  /**
+   * Sets up a hashmap which maps the text on the mode buttons
+   * to the game mode ENUMS.
+   */
   private void setupModeMap() {
     modeMap.put("Easy Mode", "EASY");
     modeMap.put("Medium Mode", "MEDIUM");
@@ -88,6 +98,11 @@ public class Menu {
     setUpButton(superHardMode, new Color(139,0,0));
   }
 
+  /**
+   * Sets up the buttons for the menu.
+   * @param button  the button to be set up
+   * @param color  the color of the button being set up
+   */
   private void setUpButton(JButton button, Color color) {
     button.setBackground(color);
     button.setForeground(Color.white);
@@ -98,13 +113,20 @@ public class Menu {
     button.addActionListener(e -> {
       menuFrame.setVisible(false);
       NumbleClient client = new NumbleClient();
-      int gameID = 0;
       String mode = modeMap.get(button.getText());
+      int gameID = 0;
       setupGame(gameID, mode, client);
     });
     menuFrame.add(button);
   }
 
+  /**
+   * Sets up the game when the user chooses a mode.
+   * A client object is create which calls the API.
+   * @param gameID  the ID of the game
+   * @param mode  the mode selected
+   * @param client  the user playing the game
+   */
   private void setupGame(int gameID, String mode, NumbleClient client) {
     try {
       gameID = client.createNewGame(mode);

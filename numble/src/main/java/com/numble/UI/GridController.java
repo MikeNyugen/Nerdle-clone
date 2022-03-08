@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+/**
+ * Responsible for the interactions between the grid model and view.
+ */
 public class GridController extends JComponent {
   ArrayList<ArrayList<Cell>> grid;
   int rows = 5;
@@ -20,6 +23,16 @@ public class GridController extends JComponent {
   int xPosition;
   int yPosition;
 
+  /**
+   * Sets up the grid depending on the game mode.
+   * @param gameID  the ID of the game
+   * @param client  the user playing the game
+   * @param mode  the game mode (EASY, MEDIUM, HARD, SUPERHARD)
+   * @throws URISyntaxException
+   * @throws IOException
+   * @throws ParseException
+   * @throws InterruptedException
+   */
   public GridController(int gameID, NumbleClient client, String mode) throws URISyntaxException,
           IOException, ParseException, InterruptedException {
     this.grid = new ArrayList<>();
@@ -31,6 +44,10 @@ public class GridController extends JComponent {
     initializeGrid();
   }
 
+  /**
+   * Responsible for drawing components.
+   * @param g  the graphics object being drawn
+   */
   @Override
   public void paintComponent(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
@@ -43,6 +60,10 @@ public class GridController extends JComponent {
     drawGrid(g2d);
   }
 
+  /**
+   * Draws the grid.
+   * @param g2d  the graphics object being drawn
+   */
   public void drawGrid(Graphics2D g2d) {
     xPosition = calculateXPos();
     yPosition = 50;
@@ -68,6 +89,9 @@ public class GridController extends JComponent {
     xPosition = calculateXPos();
   }
 
+  /**
+   * Initialises the grid.
+   */
   public void initializeGrid() {
     int startX = calculateXPos();
     int startY = 50;
@@ -83,6 +107,11 @@ public class GridController extends JComponent {
     }
   }
 
+  /**
+   * Calculates the start position to draw the grid.
+   * This will vary depending on the size of the equation.
+   * @return  the x position of the top left corner of the grid
+   */
   int calculateXPos() {
     int startPosition = 0;
     int emptySpace = 1000 - (90 * columns);
