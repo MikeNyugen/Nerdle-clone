@@ -2,6 +2,12 @@
 
 This package contains the resources needed to run the CS5031 Numble P2 Application.
 
+To run the server, use the following command:
+./gradlew -PmainClass=com.numble.NumbleApplication run
+
+To run the client with the GUI, type:
+./gradlew -PmainClass=com.numble.UI.StartGUI run
+
 It contains a RESTful API and an underlying model of the Numble game. There is also a GUI for the game,
 and the game can be run using "curl".
 
