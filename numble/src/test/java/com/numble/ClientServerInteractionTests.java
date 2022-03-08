@@ -3,6 +3,7 @@ package com.numble;
 import com.numble.model.Colour;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.*;
+import org.springframework.boot.SpringApplication;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,7 +20,7 @@ public class ClientServerInteractionTests {
             @Override
             public void run() {
                 String[] args = new String[0];
-                NumbleApplication.main(args);
+                SpringApplication.run(NumbleApplication.class, args);
             }
         });
         server.start();
