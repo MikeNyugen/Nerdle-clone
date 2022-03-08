@@ -199,7 +199,7 @@ public class Game implements GameInterface {
         }
       }
       return nonDigits == 1 && Character.isDigit(userGuess.charAt(0)) && Character.isDigit(userGuess.charAt(userGuess.toString().length() - 1))
-              && checkCorrect(userGuess.toString(), targetResult.substring(1));
+              && checkCorrect(userGuess.toString(), targetResult);
     } else if (gameMode == Mode.SUPERHARD) {
       boolean onSecondHalf = false;
       for (String s : userGuessArray) {
@@ -222,7 +222,7 @@ public class Game implements GameInterface {
       }
     }
     return nonDigits == 1 && equals == 1 && Character.isDigit(firstHalf.charAt(0)) && Character.isDigit(secondHalf.charAt(secondHalf.toString().length() - 1))
-            && checkCorrect(firstHalf.toString(), targetResult.substring(1));
+            && checkCorrect(firstHalf.toString(), targetResult);
   }
 
   public boolean checkCorrect(String guess, String result) {
@@ -237,7 +237,7 @@ public class Game implements GameInterface {
     }
     int guessResult = 0;
     guessResult = Evaluator.evaluate(equation.toString());
-    return String.valueOf(guessResult).equals(result);
+    return String.valueOf(guessResult).equals(result.substring(1));
   }
 
   /**

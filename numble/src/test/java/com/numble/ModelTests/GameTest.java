@@ -105,10 +105,10 @@ public class GameTest {
     assertFalse(game.hasWon());
     guess = Arrays.asList("1", "1", "+", "2", "=", "1", "3");
     ret = game.checkGuess(guess);
-    assertEquals(Colour.GREEN, ret.get(0));
-    assertEquals(Colour.GREEN, ret.get(1));
-    assertEquals(Colour.ORANGE, ret.get(3));
-    assertEquals(Colour.GREY, ret.get(6));
+    assertEquals(Colour.PURPLE, ret.get(0));
+    assertEquals(Colour.PURPLE, ret.get(1));
+    assertEquals(Colour.PURPLE, ret.get(3));
+    assertEquals(Colour.PURPLE, ret.get(6));
     guess = Arrays.asList("1", "1", "+", "1", "=", "1", "2");
     ret = game.checkGuess(guess);
     assertTrue(game.hasWon());
