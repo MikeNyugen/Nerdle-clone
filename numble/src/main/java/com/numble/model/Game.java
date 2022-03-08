@@ -1,8 +1,6 @@
 package com.numble.model;
 
-import ch.qos.logback.core.joran.spi.Interpreter;
 import com.numble.GameInterface;
-import com.numble.evaluator.Evaluator;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
@@ -20,7 +18,7 @@ public class Game implements GameInterface {
   private final ArrayList<String> remainingCharList;
   private ArrayList<Colour> colourCode;
   private int guessesRemaining = 5;
-  private StringBuilder result;
+  private StringBuilder secondHalf;
 
   public Mode getGameMode() {
     return gameMode;
@@ -185,45 +183,45 @@ public class Game implements GameInterface {
   }
 
   public boolean checkEquation(List<String> userGuessArray){
-    StringBuilder guess = new StringBuilder();
-    StringBuilder first = new StringBuilder();
-    result = new StringBuilder();
+    StringBuilder userGuess = new StringBuilder();
+    StringBuilder firstHalf = new StringBuilder();
+    secondHalf = new StringBuilder();
     int nonDigits = 0;
     int equals = 0;
     if (gameMode == Mode.HARD) {
       for (String s : userGuessArray) {
         if (Character.isDigit(s.charAt(0))) {
-          guess.append(s);
+          userGuess.append(s);
         } else {
-          guess.append(s);
+          userGuess.append(s);
           nonDigits++;
         }
       }
-      return nonDigits == 1 && Character.isDigit(guess.charAt(0)) && Character.isDigit(guess.charAt(guess.toString().length() - 1))
-              && checkCorrect(guess.toString(), targetResult.substring(1));
+      return nonDigits == 1 && Character.isDigit(userGuess.charAt(0)) && Character.isDigit(userGuess.charAt(userGuess.toString().length() - 1))
+              && checkCorrect(userGuess.toString(), targetResult.substring(1));
     } else if (gameMode == Mode.SUPERHARD) {
-      boolean onResult = false;
+      boolean onSecondHalf = false;
       for (String s : userGuessArray) {
         if (s.charAt(0) == '=' && equals == 0) {
-          onResult = true;
+          onSecondHalf = true;
           equals++;
-          result.append(s);
-        } else if (Character.isDigit(s.charAt(0)) && !onResult) {
-          first.append(s);
-        } else if (Character.isDigit(s.charAt(0)) && onResult) {
-          result.append(s);
+          secondHalf.append(s);
+        } else if (Character.isDigit(s.charAt(0)) && !onSecondHalf) {
+          firstHalf.append(s);
+        } else if (Character.isDigit(s.charAt(0)) && onSecondHalf) {
+          secondHalf.append(s);
         } else {
           if (equals == 1) {
-            result.append(s);
+            secondHalf.append(s);
           } else {
-            first.append(s);
+            firstHalf.append(s);
           }
           nonDigits++;
         }
       }
     }
-    return nonDigits == 1 && equals == 1 && Character.isDigit(first.charAt(0)) && Character.isDigit(result.charAt(result.toString().length() - 1))
-            && checkCorrect(first.toString(), targetResult.substring(1));
+    return nonDigits == 1 && equals == 1 && Character.isDigit(firstHalf.charAt(0)) && Character.isDigit(secondHalf.charAt(secondHalf.toString().length() - 1))
+            && checkCorrect(firstHalf.toString(), targetResult.substring(1));
   }
 
   public boolean checkCorrect(String guess, String result) {
