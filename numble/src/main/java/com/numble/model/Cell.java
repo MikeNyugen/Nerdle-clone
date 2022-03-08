@@ -1,15 +1,23 @@
 package com.numble.model;
 
+/**
+ * Represents a cell in the game grid.
+ */
 public class Cell {
   String value;
   int xPosition;
   int yPosition;
   Colour colour;
 
+  /**
+   * Initialises a cell with a blank value and sets the colour to white.
+   * @param xPosition  the x position of the cell
+   * @param yPosition  the y position of the cell
+   */
   public Cell(int xPosition, int yPosition) {
     this.xPosition = xPosition;
     this.yPosition = yPosition;
-    value = " ";
+    value = "";
     colour = Colour.WHITE;
   }
 

@@ -19,13 +19,11 @@ public class Game implements GameInterface {
   private final ArrayList<String> remainingCharList;
   private ArrayList<Colour> colourCode;
   private int guessesRemaining = 5;
-  private StringBuilder secondHalf;
+  private Mode gameMode;
 
   public Mode getGameMode() {
     return gameMode;
   }
-
-  private Mode gameMode;
 
   /**
    * Constructor to create a game which selects an equation from file
@@ -65,7 +63,7 @@ public class Game implements GameInterface {
   }
 
   /**
-   * Method to check the user guess
+   * Method to check the user guess.
    *
    * @param userGuessArray an array of each character the user enters in their guess
    * @return an array list of colours which represent the "success" of each character guess
@@ -92,7 +90,7 @@ public class Game implements GameInterface {
   }
 
   /**
-   * initializes initial array of colours, length of the target, default colour grey
+   * Initializes initial array of colours, length of the target, default colour grey.
    *
    * @param targetList list of characters the user must guess
    */
@@ -103,7 +101,7 @@ public class Game implements GameInterface {
   }
 
   /**
-   * checks which character guesses are exactly correct
+   * Checks which character guesses are exactly correct.
    *
    * @param userGuessArray array list of the users guess
    * @param targetList     array list which the user must guess
@@ -122,7 +120,7 @@ public class Game implements GameInterface {
   }
 
   /**
-   * checks which character guesses are partially correct
+   * Checks which character guesses are partially correct.
    *
    * @param userGuessArray array list of the users guess
    * @param targetList     array list which the user must guess
@@ -140,7 +138,7 @@ public class Game implements GameInterface {
   }
 
   /**
-   * checks whether the user has won or not
+   * Checks whether the user has won or not.
    *
    * @return true if the user has won
    */
@@ -154,7 +152,7 @@ public class Game implements GameInterface {
   }
 
   /**
-   * checks whether the user has lost or not
+   * Checks whether the user has lost or not.
    *
    * @return true if the user has lost
    */
@@ -183,14 +181,20 @@ public class Game implements GameInterface {
     return targetResult;
   }
 
-  public boolean checkEquation(List<String> userGuessArray){
+  /**
+   * Check if an equation is valid.
+   *
+   * @param userGuessList the user's guess as a list
+   * @return a boolean indicating whether the equation is valid.
+   */
+  public boolean checkEquation(List<String> userGuessList) {
     StringBuilder userGuess = new StringBuilder();
     StringBuilder firstHalf = new StringBuilder();
-    secondHalf = new StringBuilder();
+    StringBuilder secondHalf = new StringBuilder();
     int nonDigits = 0;
     int equals = 0;
     if (gameMode == Mode.HARD) {
-      for (String s : userGuessArray) {
+      for (String s : userGuessList) {
         if (Character.isDigit(s.charAt(0))) {
           userGuess.append(s);
         } else {
@@ -202,7 +206,7 @@ public class Game implements GameInterface {
               && checkCorrect(userGuess.toString(), targetResult);
     } else if (gameMode == Mode.SUPERHARD) {
       boolean onSecondHalf = false;
-      for (String s : userGuessArray) {
+      for (String s : userGuessList) {
         if (s.charAt(0) == '=' && equals == 0) {
           onSecondHalf = true;
           equals++;
@@ -225,6 +229,13 @@ public class Game implements GameInterface {
             && checkCorrect(firstHalf.toString(), targetResult);
   }
 
+  /**
+   * Check if an equation given as a string evaluates to a given result.
+   *
+   * @param guess  The user's guess
+   * @param result The result of the equation including the equals sign
+   * @return a boolean indicating whether the equation is correct.
+   */
   public boolean checkCorrect(String guess, String result) {
     ExpressionParser parser = new SpelExpressionParser();
     StringBuilder equation = new StringBuilder();

@@ -12,8 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 
+/**
+ * Responsible for interactions with the model and the game view.
+ */
 public class GameController {
   private final GameView gameView;
+  GridController gridController;
   private final ArrayList<JButton> calculator;
   private final ArrayList<JLabel> values;
   private final Hashtable<String, Hashtable<Colour, Color>> colourMapping;
@@ -28,8 +32,6 @@ public class GameController {
   private int row = 0;
   private final int columns;
   private final int targetLength;
-
-  GridController gridController;
 
   public GameController(GameView gameView, int gameID, NumbleClient client, String mode) throws URISyntaxException,
           IOException, ParseException, InterruptedException {
@@ -70,19 +72,34 @@ public class GameController {
     addSubmitListener();
   }
 
+  /**
+   * Draws a value on the grid when a button is clicked.
+   *
+   * @param button the button that the listener is added to
+   * @param value  the value that is drawn on the grid
+   */
   private void addButtonListener(JButton button, String value) {
     button.addActionListener(e -> {
+      int xPadding = 32;
+      int yPadding = 15;
       if (gridIndex != targetLength) {
         gridController.getGrid().get(row).get(gridIndex).setValue(value);
         userGuess.append(gridController.getGrid().get(row).get(gridIndex).getValue());
-        int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + 32;
-        int y = gridController.getGrid().get(row).get(gridIndex).getyPosition() + 15;
+        int x = gridController.getGrid().get(row).get(gridIndex).getxPosition() + xPadding;
+        int y = gridController.getGrid().get(row).get(gridIndex).getyPosition() + yPadding;
         drawValue(x, y, value);
         gridIndex++;
       }
     });
   }
 
+  /**
+   * Draws a value on the grid.
+   *
+   * @param x     the x position of the value drawn
+   * @param y     the y position of the value drawn
+   * @param value the value that is to be drawn
+   */
   private void drawValue(int x, int y, String value) {
     JLabel label = new JLabel(value);
     label.setBounds(x, y, 50, 50);
@@ -93,6 +110,14 @@ public class GameController {
     gameView.mainFrame.repaint();
   }
 
+  /**
+   * Draw the result of the equation to the user on easy and hard mode.
+   *
+   * @throws URISyntaxException
+   * @throws IOException
+   * @throws ParseException
+   * @throws InterruptedException
+   */
   public void drawResult() throws URISyntaxException, IOException, ParseException, InterruptedException {
     String targetResult = client.getTargetResult(gameID);
     String[] targetResultArr = targetResult.split("");
@@ -112,6 +137,9 @@ public class GameController {
     }
   }
 
+  /**
+   * Deletes numbers on the grid when the 'del' button is clicked.
+   */
   public void addDeleteListener() {
     gameView.getDelete().addActionListener(e -> {
       if (gridIndex > 0 && userGuess.length() > 0) {
@@ -126,6 +154,11 @@ public class GameController {
     });
   }
 
+  /**
+   * Submits the user's guess.
+   * Colours the grid and keyboard and checks if the user
+   * has won or lost.
+   */
   public void addSubmitListener() {
     gameView.getSubmit().addActionListener(e -> {
       try {
@@ -153,6 +186,11 @@ public class GameController {
     });
   }
 
+  /**
+   * Colours the grid.
+   * @param colours  list containing the colours of each cell in the grid
+   * @param userGuessList  list containing the user's guess
+   */
   private void colourGrid(ArrayList<Colour> colours, ArrayList<String> userGuessList) {
     for (int i = 0; i < colours.size(); i++) {
       gridController.getGrid().get(row).get(i).setColour(colours.get(i));
@@ -174,6 +212,11 @@ public class GameController {
     }
   }
 
+  /**
+   * Colours the keyboard.
+   * @param colours  list containing the colours of each cell in the grid.
+   * @param userGuessList  list containing the user's guess
+   */
   private void colourKeyboard(ArrayList<Colour> colours, ArrayList<String> userGuessList) {
     for (JButton jButton : calculator) {
       for (int j = 0; j < userGuessList.size(); j++) {
@@ -185,6 +228,9 @@ public class GameController {
     }
   }
 
+  /**
+   * Resets variables and moves onto the next row.
+   */
   private void reset() {
     row++;
     gridIndex = 0;
@@ -193,6 +239,9 @@ public class GameController {
     gameView.mainFrame.repaint();
   }
 
+  /**
+   * Put the game in the win state.
+   */
   private void winGame() {
     JOptionPane.showMessageDialog(gameView.mainFrame, "Well done! You've guessed the equation :)");
     gameView.mainFrame.repaint();
@@ -201,6 +250,9 @@ public class GameController {
     }
   }
 
+  /**
+   * Put the game in the lost state.
+   */
   private void loseGame() {
     JOptionPane.showMessageDialog(gameView.mainFrame, "You have lost the game :(");
     gameView.mainFrame.repaint();
