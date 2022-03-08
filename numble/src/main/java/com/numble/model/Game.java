@@ -1,6 +1,7 @@
 package com.numble.model;
 
 import com.numble.GameInterface;
+import com.numble.evaluator.Evaluator;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
@@ -235,7 +236,7 @@ public class Game implements GameInterface {
       equation.append(c);
     }
     int guessResult = 0;
-    guessResult = parser.parseExpression(equation.toString()).getValue(Integer.class);
+    guessResult = Evaluator.evaluate(equation.toString());
     return String.valueOf(guessResult).equals(result);
   }
 
