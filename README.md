@@ -1,6 +1,9 @@
-# Project Code
+# Demo
+![Application in action](https://github.com/MikeNyugen/Nerdle-clone/blob/main/demo.png)
 
-This package contains the resources needed to run the CS5031 Numble P2 Application.
+# Running the application
+
+This package contains the resources needed to run theNumble Application.
 
 To run the server, use the following command:
 ./gradlew -PmainClass=com.numble.NumbleApplication run
@@ -8,24 +11,8 @@ To run the server, use the following command:
 To run the client with the GUI, type:
 ./gradlew -PmainClass=com.numble.UI.StartGUI run
 
-It contains a RESTful API and an underlying model of the Numble game. There is also a GUI for the game,
-and the game can be run using "curl".
 
-There are also appropriate test classes within the test folder.
-
-The game can be run from the command line using the gradle bootRun command.
-
-The game has four different modes:
-
-Easy: The result of the equation is displayed to the user. The user's guess does not need to be a valid equation.
-
-Medium: The result of the equation is not displayed to the user. The user's guess does not need to be a valid equation.
-
-Hard: The result of the equation is displayed to the user. The user's guess needs to be valid and be equal to the target result.
-
-Super_hard: The result of the equation is not displayed to the user. The user's guess needs to be valid and be equal to the target result.
-
-API Description:
+# API Description:
 
 POST method /new_game
 arguments: mode, which is one of EASY, MEDIUM, HARD, SUPERHARD
